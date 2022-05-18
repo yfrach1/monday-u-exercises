@@ -1,0 +1,145 @@
+body {
+  height: 100vh;
+  background: linear-gradient(90deg, #ffc0cb, #00ffff, #f9f904);
+  display: flex;
+  flex-direction: center;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.empty_tasks_text {
+}
+
+.container {
+  display: flex;
+  justify-content: row;
+  align-items: center;
+  /* border: 1px solid;
+  border-color: red; */
+  border-radius: 5px;
+  background-color: white;
+}
+
+.top_bar_container {
+  display: flex;
+  justify-content: row;
+  margin-bottom: 15px;
+}
+.buttom_bar_container {
+  margin-top: 18px;
+  height: 30px;
+  /* border: 2px solid; */
+  width: 100%;
+  margin-bottom: 5px;
+  justify-content: space-between;
+  align-items: center;
+  display: none;
+}
+
+.task {
+  background-color: rgb(235, 232, 232);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+  padding-left: 5px;
+  font-family: "Times New Roman", Times, serif;
+  margin: 0;
+}
+
+.task_container {
+  display: flex;
+  justify-content: row;
+  align-items: center;
+  /* border: 1px solid;
+  border-color: #ffc0cb; */
+  width: 100%;
+  margin-bottom: 4px;
+  transition: 5s;
+}
+
+.task_container:focus-within .task {
+  border: 1px solid;
+  border-color: #ffc0cb;
+  transition: step-start;
+}
+
+.task_container:hover .delete_task_button {
+  display: flex;
+  transition: step-start;
+}
+
+.tasks_list_container {
+  /* border-color: red; */
+  /* border: 1px solid; */
+  display: none;
+  flex-direction: column;
+  justify-content: column;
+  align-items: center;
+}
+
+.place_tags {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+input {
+  padding: 5px 0px 5px 5px;
+  margin-right: 10px;
+  width: 200px;
+}
+
+img:hover {
+  cursor: pointer;
+}
+
+img {
+  background-color: rgb(233, 241, 245);
+  border-radius: 10px;
+  height: 35px;
+  width: 35px;
+}
+
+#task_amount_text {
+  display: inline;
+  align-items: center;
+  padding-left: 5px;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.add_button {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  /* margin-left: 4px 2px; */
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.clearAll_button {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.delete_task_button {
+  height: 30px;
+  cursor: pointer;
+  border-radius: 3px;
+  display: none;
+}

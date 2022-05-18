@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Exercise 1</title>
+  <head>
+    <title>Task Board</title>
     <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+  </head>
+  <body>
+    <div class="container">
+      <div class="place_tags">
+        <h1>R&D Todo list</h1>
+        <div class="top_bar_container" id="add_new_task">
+          <input
+            type="text"
+            id="task_input"
+            name="task"
+            minlength="1"
+            maxlength="44"
+            placeholder="Add your new task"
+          />
 
-<h1>Todo list</h1>
-
-
-</body>
-<script src="script.js"></script>
+          <button class="add_button" id="add_button">Add</button>
+        </div>
+        <div class="empty_tasks_text" id="empty_tasks_text">
+          There is ZERO tasks, lets try to add one.
+        </div>
+        <div class="tasks_list_container" id="tasks_list_container"></div>
+        <div class="buttom_bar_container" id="buttom_bar_container">
+          <p id="amount_of_pending_tasks"></p>
+          <button class="clearAll_button" id="clearAll_button">
+            Clear All
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="script.js"></script>
 </html>
