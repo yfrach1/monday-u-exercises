@@ -1,6 +1,9 @@
-let tasks_list = [];
+const tasks_list = [];
 let tasks_amount = 0;
-let sort_direction = "down";
+const sort_direction = "down";
+const arrow_down_src = "../assets/svg/down_arrow.svg";
+const arrow_up_src = "../assets/svg/up_arrow.svg";
+
 const add_button = document.getElementById("add_button");
 add_button.addEventListener("click", onClickAddTask);
 
@@ -37,6 +40,13 @@ function onClickAddTask() {
   injectNewTaskToHtml(text);
 }
 
+function setDispalyToEmptyTasks() {
+  setSortButtonDisplay("none");
+  setEmptyTasksDivDisplay("block");
+  setBottomDivBarDisplay("none");
+  setTasksDivContainerDisplay("none");
+}
+
 function firstCharIsNotCapital(text) {
   return text[0].toUpperCase() !== text[0];
 }
@@ -58,10 +68,7 @@ function clearTasksHtml() {
 function resetTaskList() {
   tasks_list = [];
   tasks_amount = 0;
-  setSortButtonDisplay("none");
-  setEmptyTasksDivDisplay("block");
-  setBottomDivBarDisplay("none");
-  setTasksDivContainerDisplay("none");
+  setDispalyToEmptyTasks();
 }
 
 function setBottomDivBarDisplay(displayStatus) {
@@ -90,20 +97,20 @@ function updatePendingTask() {
 
 function sortTasksList() {
   clearTasksHtml();
-  sort_arrow = document.getElementById("sort_arrow");
+  const sort_arrow = document.getElementById("sort_arrow");
   if (sort_direction === "down") {
     tasks_list.sort((a, b) => {
       return a.text.toLowerCase().localeCompare(b.text.toLowerCase());
     });
     sort_direction = "up";
 
-    sort_arrow.src = "../assets/svg/down_arrow.svg";
+    sort_arrow.src = arrow_down_src;
   } else {
     tasks_list.sort((a, b) => {
       return b.text.toLowerCase().localeCompare(a.text.toLowerCase());
     });
     sort_direction = "down";
-    sort_arrow.src = "../assets/svg/up_arrow.svg";
+    sort_arrow.src = arrow_up_src;
   }
 
   const task_list_div = document.getElementById("tasks_list_container");
@@ -120,10 +127,7 @@ function removeTaskFromList(task) {
   tasks_list.splice(index, 1);
   updateTasksAmount("-");
   if (tasks_amount === 0) {
-    setSortButtonDisplay("none");
-    setEmptyTasksDivDisplay("block");
-    setBottomDivBarDisplay("none");
-    setTasksDivContainerDisplay("none");
+    setDispalyToEmptyTasks();
   }
   updatePendingTask();
 }
