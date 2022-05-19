@@ -1,6 +1,6 @@
 const tasks_list = [];
 let tasks_amount = 0;
-const sort_direction = "down";
+let sort_direction = "down";
 const arrow_down_src = "../assets/svg/down_arrow.svg";
 const arrow_up_src = "../assets/svg/up_arrow.svg";
 
