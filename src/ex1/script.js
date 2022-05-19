@@ -1,5 +1,6 @@
 let tasks_list = [];
 let tasks_amount = 0;
+let sort_direction = "down";
 const add_button = document.getElementById("add_button");
 add_button.addEventListener("click", onClickAddTask);
 
@@ -10,8 +11,8 @@ input.addEventListener("keypress", (event) => {
   }
 });
 
-const sort_butten = document.getElementById("sort_button");
-sort_butten.addEventListener("click", sortTasksList);
+const sort_div = document.getElementById("sort");
+sort_div.addEventListener("click", sortTasksList);
 
 const clearAll_button = document.getElementById("clearAll_button");
 clearAll_button.addEventListener("click", onClickClearAll);
@@ -28,7 +29,7 @@ function onClickAddTask() {
 
   input_tag.value = "";
   if (tasks_amount === 0) {
-    setSortButtonDisplay("block");
+    setSortButtonDisplay("flex");
     setEmptyTasksDivDisplay("none");
     setBottomDivBarDisplay("flex");
     setTasksDivContainerDisplay("flex");
@@ -76,8 +77,8 @@ function setEmptyTasksDivDisplay(displayStatus) {
   tasks_list_div.style.display = displayStatus;
 }
 function setSortButtonDisplay(displayStatus) {
-  const sort_button = document.getElementById("sort_button");
-  sort_button.style.display = displayStatus;
+  const sort_display = document.getElementById("sort");
+  sort_display.style.display = displayStatus;
 }
 
 function updatePendingTask() {
@@ -89,12 +90,23 @@ function updatePendingTask() {
 
 function sortTasksList() {
   clearTasksHtml();
-  console.log(tasks_list);
-  tasks_list.sort((a, b) => {
-    return a.text.toLowerCase().localeCompare(b.text.toLowerCase());
-  });
+  sort_arrow = document.getElementById("sort_arrow");
+  if (sort_direction === "down") {
+    tasks_list.sort((a, b) => {
+      return a.text.toLowerCase().localeCompare(b.text.toLowerCase());
+    });
+    sort_direction = "up";
+
+    sort_arrow.src = "../assets/svg/down_arrow.svg";
+  } else {
+    tasks_list.sort((a, b) => {
+      return b.text.toLowerCase().localeCompare(a.text.toLowerCase());
+    });
+    sort_direction = "down";
+    sort_arrow.src = "../assets/svg/up_arrow.svg";
+  }
+
   const task_list_div = document.getElementById("tasks_list_container");
-  console.log(tasks_list);
   tasks_list.forEach((object) => {
     task_list_div.appendChild(object.element);
   });
