@@ -1,11 +1,26 @@
 body {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
   height: 100vh;
-  background: linear-gradient(90deg, #ffc0cb, #00ffff, #f9f904);
+
   display: flex;
   flex-direction: center;
   justify-content: center;
-  align-items: center;
+  align-items: baseline;
   overflow: hidden;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .empty_tasks_text {
@@ -13,10 +28,8 @@ body {
 
 .container {
   display: flex;
-  justify-content: row;
+  margin-top: 100px;
   align-items: center;
-  /* border: 1px solid;
-  border-color: red; */
   border-radius: 5px;
   background-color: white;
 }
@@ -47,6 +60,7 @@ body {
   padding-left: 5px;
   font-family: "Times New Roman", Times, serif;
   margin: 0;
+  border-radius: 1px;
 }
 
 .task_container {
@@ -69,11 +83,13 @@ body {
 .task_container:hover .delete_task_button {
   display: flex;
   transition: step-start;
+  cursor: pointer;
+}
+.task_container:hover .task {
+  background-color: #ffc0cb;
 }
 
 .tasks_list_container {
-  /* border-color: red; */
-  /* border: 1px solid; */
   display: none;
   flex-direction: column;
   justify-content: column;
@@ -89,7 +105,7 @@ body {
 input {
   padding: 5px 0px 5px 5px;
   margin-right: 10px;
-  width: 200px;
+  width: 220px;
 }
 
 img:hover {
@@ -122,6 +138,20 @@ img {
   /* margin-left: 4px 2px; */
   cursor: pointer;
   border-radius: 3px;
+}
+
+.sort_button {
+  background-color: #8506f5; /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-bottom: 4px;
+  display: none;
 }
 
 .clearAll_button {
