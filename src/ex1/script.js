@@ -15,7 +15,7 @@ input.addEventListener("keypress", (event) => {
 });
 
 const sort_div = document.getElementById("sort");
-sort_div.addEventListener("click", sortTasksList);
+sort_div.addEventListener("click", onClickSort);
 
 const clearAll_button = document.getElementById("clearAll_button");
 clearAll_button.addEventListener("click", onClickClearAll);
@@ -95,20 +95,27 @@ function updatePendingTask() {
   pending_tasks_p_tag.innerText = "You have " + tasks_amount + " pending tasks";
 }
 
-function sortTasksList() {
-  clearTasksHtml();
-  const sort_arrow = document.getElementById("sort_arrow");
-  if (sort_direction === "down") {
+function sortList(direction) {
+  if (direction === "down") {
     tasks_list.sort((a, b) => {
       return a.text.toLowerCase().localeCompare(b.text.toLowerCase());
     });
-    sort_direction = "up";
-
-    sort_arrow.src = arrow_down_src;
-  } else {
+  } else if (direction === "up") {
     tasks_list.sort((a, b) => {
       return b.text.toLowerCase().localeCompare(a.text.toLowerCase());
     });
+  }
+}
+
+function onClickSort() {
+  clearTasksHtml();
+  const sort_arrow = document.getElementById("sort_arrow");
+  if (sort_direction === "down") {
+    sortList("down");
+    sort_direction = "up";
+    sort_arrow.src = arrow_down_src;
+  } else {
+    sortList("up");
     sort_direction = "down";
     sort_arrow.src = arrow_up_src;
   }
@@ -125,7 +132,7 @@ function removeTaskFromList(task) {
   });
 
   tasks_list.splice(index, 1);
-  updateTasksAmount("-");
+  tasks_amount = updateTasksAmount("-");
   if (tasks_amount === 0) {
     setDispalyToEmptyTasks();
   }
@@ -135,12 +142,10 @@ function removeTaskFromList(task) {
 function updateTasksAmount(action) {
   switch (action) {
     case "+": {
-      tasks_amount++;
-      break;
+      return tasks_amount + 1;
     }
     case "-": {
-      tasks_amount--;
-      break;
+      return tasks_amount - 1;
     }
   }
 }
@@ -171,9 +176,9 @@ function injectNewTaskToHtml(task) {
 
   const tasks_list_div = document.getElementById("tasks_list_container");
 
-  let newObj = { text: task, element: task_div_tag };
+  const newObj = { text: task, element: task_div_tag };
   tasks_list.push(newObj);
-  updateTasksAmount("+");
+  tasks_amount = updateTasksAmount("+");
   updatePendingTask();
   tasks_list_div.appendChild(task_div_tag);
 
