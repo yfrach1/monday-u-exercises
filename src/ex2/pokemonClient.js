@@ -38,10 +38,7 @@ class PokemonClient {
   }
 
   async handleFetchNewPokemons(pokemonsIdToFetch) {
-    //let allFetchRequest;
     let allRequestsResults;
-    //let faileRequests;
-    // let successRequest;
     const allFetchRequest = pokemonsIdToFetch.map((pokemonId) => {
       return this.fetchPokemon(pokemonId);
     });
