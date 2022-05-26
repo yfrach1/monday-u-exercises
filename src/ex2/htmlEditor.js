@@ -12,6 +12,12 @@ class HtmlEditor {
     this.sortDirection = "up";
   }
 
+  setDisplayEmptyTasks() {
+    this.changeDIsplayOfElement("none", "buttom_bar_container");
+    this.changeDIsplayOfElement("none", "sort");
+    this.emptyTasks = true;
+  }
+
   createNewTag(tagName) {
     return document.createElement(tagName);
   }
@@ -36,6 +42,7 @@ class HtmlEditor {
     span.innerText =
       "You have " + this.itemManager.getTaskAmount() + " pending tasks";
   }
+
   removeTask(li) {
     if (li.id !== "text") {
       this.pokemonClient.removePokemonIdFromStorage(li.id);
@@ -91,12 +98,6 @@ class HtmlEditor {
     }
     this.removeAllTasksFromHtml();
     this.renderTasksToHtml();
-  }
-
-  setDisplayEmptyTasks() {
-    this.changeDIsplayOfElement("none", "buttom_bar_container");
-    this.changeDIsplayOfElement("none", "sort");
-    this.emptyTasks = true;
   }
 
   handleClearAllHtml() {

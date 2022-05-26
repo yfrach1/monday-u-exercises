@@ -36,6 +36,26 @@ class PokemonClient {
 
     return failedRquest;
   }
+  createPokemonTask(name, types) {
+    return (
+      "Catch " + name + " the " + this.getPokemonType(types) + " type pokemon"
+    );
+  }
+  async fetchPokemon(id) {
+    const api = this.api + id;
+    let text;
+    try {
+      const rawResponse = await fetch(api);
+      const content = await rawResponse.json();
+      this.pokemonsId[content.name] = id;
+
+      text = this.createPokemonTask(content.name, content.types);
+    } catch (e) {
+      this.pokemonsId[id] = id;
+      text = "pokemon with ID " + id + " was not found";
+    }
+    return text;
+  }
 
   async handleFetchNewPokemons(pokemonsIdToFetch) {
     let allRequestsResults;
@@ -79,28 +99,6 @@ class PokemonClient {
       typeArray.push(types[i].type.name);
     }
     return typeArray.join("/");
-  }
-
-  createPokemonTask(name, types) {
-    return (
-      "Catch " + name + " the " + this.getPokemonType(types) + " type pokemon"
-    );
-  }
-
-  async fetchPokemon(id) {
-    const api = this.api + id;
-    let text;
-    try {
-      const rawResponse = await fetch(api);
-      const content = await rawResponse.json();
-      this.pokemonsId[content.name] = id;
-
-      text = this.createPokemonTask(content.name, content.types);
-    } catch (e) {
-      this.pokemonsId[id] = id;
-      text = "pokemon with ID " + id + " was not found";
-    }
-    return text;
   }
 
   extractNameOutFromText(text) {
