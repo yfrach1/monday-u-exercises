@@ -16,9 +16,19 @@
           />
           <button type="button" id="list-item-submit">+</button>
         </div>
-        <ul id="list"></ul>
-      </div>
+        <div class="sort" id="sort">
+          <div class="sort-text">sort</div>
+          <img class="sort-arrow" id="sort_arrow" src="./images/up_arrow.svg"></img>
+        </div>
+        <ul id="list">
+        </ul>
+        <div class="buttom-bar-container" id="buttom_bar_container">
+          <span id="amount_of_pending_tasks"></span>
+          <button class="clear-all-button" id="clear_all_button">
+            Clear All
+          </button></div>
     </div>
   </body>
-  <script src="main.js"></script>
+  <script type="module" src="./main.js"></script>
+  <!-- <script src="itemManager.js" type="module"></script> -->
 </html>
