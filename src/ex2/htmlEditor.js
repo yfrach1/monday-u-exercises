@@ -135,4 +135,4 @@ class HtmlEditor {
   }
 }
 
-export default HtmlEditor;
+// export default HtmlEditor;

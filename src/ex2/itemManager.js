@@ -1,9 +1,9 @@
-import {
-  capitalizeFirstLetter,
-  differenceOfTwoArray,
-  removeItemFromArray,
-  convertTextToLowerCase,
-} from "./utils.js";
+// import {
+//   capitalizeFirstLetter,
+//   differenceOfTwoArray,
+//   removeItemFromArray,
+//   convertTextToLowerCase,
+// } from "./utils.js";
 
 class ItemManager {
   constructor() {
@@ -67,4 +67,4 @@ class ItemManager {
   }
 }
 
-export default ItemManager;
+// export default ItemManager;

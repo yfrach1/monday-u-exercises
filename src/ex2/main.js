@@ -1,9 +1,9 @@
-import ItemManager from "./itemManager.js";
-import PokemonClient from "./pokemonClient.js";
-import Input from "./input.js";
-import HtmlEditor from "./htmlEditor.js";
-import { differenceOfTwoArray, combineTwoArrays } from "./utils.js";
-// Implement the `Main` class here
+// import ItemManager from "./itemManager.js";
+// import PokemonClient from "./pokemonClient.js";
+// import Input from "./input.js";
+// import HtmlEditor from "./htmlEditor.js";
+// import { differenceOfTwoArray, combineTwoArrays } from "./utils.js";
+// // Implement the `Main` class here
 
 class Main {
   constructor() {

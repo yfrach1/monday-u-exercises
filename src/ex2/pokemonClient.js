@@ -1,9 +1,9 @@
-import {
-  differenceOfTwoArray,
-  combineTwoArrays,
-  removeAllExceptNumbers,
-  removeItemFromArray,
-} from "./utils.js";
+// import {
+//   differenceOfTwoArray,
+//   combineTwoArrays,
+//   removeAllExceptNumbers,
+//   removeItemFromArray,
+// } from "./utils.js";
 class PokemonClient {
   constructor() {
     this.alreadyFetchedId = null;
@@ -152,4 +152,4 @@ class PokemonClient {
   }
 }
 
-export default PokemonClient;
+// export default PokemonClient;

@@ -158,7 +158,7 @@ span {
 }
 
 .sort {
-  display: flex;
+  display: none;
   margin-top: 10px;
   margin-right: 10px;
   justify-content: center;
