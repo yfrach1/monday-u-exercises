@@ -1,9 +1,3 @@
-// import {
-//   differenceOfTwoArray,
-//   combineTwoArrays,
-//   removeAllExceptNumbers,
-//   removeItemFromArray,
-// } from "./utils.js";
 class PokemonClient {
   constructor() {
     this.alreadyFetchedId = null;
@@ -151,5 +145,3 @@ class PokemonClient {
     return pokemonsName;
   }
 }
-
-// export default PokemonClient;

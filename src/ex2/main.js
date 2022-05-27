@@ -1,10 +1,3 @@
-// import ItemManager from "./itemManager.js";
-// import PokemonClient from "./pokemonClient.js";
-// import Input from "./input.js";
-// import HtmlEditor from "./htmlEditor.js";
-// import { differenceOfTwoArray, combineTwoArrays } from "./utils.js";
-// // Implement the `Main` class here
-
 class Main {
   constructor() {
     this.addButten = null;
@@ -62,7 +55,6 @@ class Main {
   async fetchData(input) {
     let task = await this.pokemonClient.fetchPokemon(input);
     this.itemManager.addTaskToArray(task);
-    //console.log(task);
   }
 
   handleOnClickSort() {
@@ -93,8 +85,5 @@ class Main {
 const main = new Main();
 
 document.addEventListener("DOMContentLoaded", function () {
-  // you should create an `init` method in your class
-  // the method should add the event listener to your "add" button
-
   main.init();
 });

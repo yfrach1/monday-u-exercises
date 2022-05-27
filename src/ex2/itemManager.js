@@ -1,10 +1,3 @@
-// import {
-//   capitalizeFirstLetter,
-//   differenceOfTwoArray,
-//   removeItemFromArray,
-//   convertTextToLowerCase,
-// } from "./utils.js";
-
 class ItemManager {
   constructor() {
     this.toDoList = [];
@@ -66,5 +59,3 @@ class ItemManager {
     this.taskAmount = 0;
   }
 }
-
-// export default ItemManager;

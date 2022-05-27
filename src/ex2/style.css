@@ -9,7 +9,7 @@ body {
 
 @font-face {
   font-family: Poppins;
-  src: url("../assets/fontStyle/Poppins.ttf");
+  src: url("./font/Poppins.ttf");
 }
 .app-container {
   width: 100%;

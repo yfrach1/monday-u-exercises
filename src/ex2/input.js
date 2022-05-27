@@ -1,10 +1,3 @@
-// import {
-//   removeDuplicate,
-//   isTextContainOnlyNumbersAndSpaces,
-//   clearSpacesFromNumber,
-//   removeExtraSpaceFromTask,
-// } from "./utils.js";
-
 class Input {
   constructor() {
     this.inputButton = null;

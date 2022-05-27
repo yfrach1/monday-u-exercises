@@ -134,5 +134,3 @@ class HtmlEditor {
     });
   }
 }
-
-// export default HtmlEditor;
