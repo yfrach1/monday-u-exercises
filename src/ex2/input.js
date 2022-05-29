@@ -22,7 +22,7 @@ class Input {
 
   getInputFromUser() {
     const text = this.inputButton.value;
-    this.inputButton.value = ""; // nees to do it on the htmlEditor class
+    this.inputButton.value = "";
     if (!text) {
       return null;
     }
@@ -47,5 +47,3 @@ class Input {
     return { newPokemonsIdArr, newNormalTasks };
   }
 }
-
-// export default Input;

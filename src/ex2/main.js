@@ -7,8 +7,6 @@ class Main {
   sortButton;
   input;
 
-  constructor() {}
-
   async handleNewInput() {
     let answer = this.inputHandler.handleAndValidateInput();
     if (!answer) {
