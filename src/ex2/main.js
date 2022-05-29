@@ -1,13 +1,13 @@
 class Main {
-  constructor() {
-    this.addButten = null;
-    this.sortButton = null;
-    this.input - null;
-    this.itemManager = new ItemManager();
-    this.pokemonClient = new PokemonClient();
-    this.inputHandler = new Input();
-    this.htmlEditor = new HtmlEditor(this.itemManager, this.pokemonClient);
-  }
+  pokemonClient = new PokemonClient();
+  itemManager = new ItemManager(this.pokemonClient);
+  inputHandler = new Input();
+  htmlEditor = new HtmlEditor(this.itemManager);
+  addButten;
+  sortButton;
+  input;
+
+  constructor() {}
 
   async handleNewInput() {
     let answer = this.inputHandler.handleAndValidateInput();
@@ -20,41 +20,10 @@ class Main {
     if (newPokemonsIdArr === undefined || newNormalTasks === undefined) {
       return;
     }
-    let normalTasksToBeAdd =
-      this.itemManager.handleNewNormalTasks(newNormalTasks);
 
-    let pokemonsNameToBeFetch =
-      this.pokemonClient.checkForPokemonInNoramlTasks(normalTasksToBeAdd);
+    await this.itemManager.handleNewTasks(newPokemonsIdArr, newNormalTasks);
 
-    if (pokemonsNameToBeFetch.length) {
-      normalTasksToBeAdd = differenceOfTwoArray(
-        normalTasksToBeAdd,
-        pokemonsNameToBeFetch
-      );
-      newPokemonsIdArr = combineTwoArrays(
-        newPokemonsIdArr,
-        pokemonsNameToBeFetch
-      );
-    }
-
-    let pokemonTasksToBeAdd = await this.pokemonClient.handleNewPokemonesId(
-      newPokemonsIdArr
-    );
-
-    let newTasksToBeadd = [...pokemonTasksToBeAdd, ...normalTasksToBeAdd];
-
-    this.itemManager.addNewTasksToToDoList(newTasksToBeadd);
     this.htmlEditor.HandleNewTasksToHtml();
-  }
-
-  async isPokemonIdExist(text) {
-    let x = await this.pokemonClient.fetchPokemon(text);
-    this.addNewTaskOnHtml(x);
-  }
-
-  async fetchData(input) {
-    let task = await this.pokemonClient.fetchPokemon(input);
-    this.itemManager.addTaskToArray(task);
   }
 
   handleOnClickSort() {

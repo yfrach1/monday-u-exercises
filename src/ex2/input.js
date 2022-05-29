@@ -1,7 +1,5 @@
 class Input {
-  constructor() {
-    this.inputButton = null;
-  }
+  inputButton = null;
 
   checkInputType(input) {
     let newPokemonsIdArr = [];

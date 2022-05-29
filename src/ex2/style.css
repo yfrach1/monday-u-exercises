@@ -39,7 +39,7 @@ body {
 .list-container {
   display: flex;
   flex-direction: column;
-  width: 30%;
+  /* width: 30%; */
   height: 50%;
   background-color: white;
   border: 1px silver solid;
@@ -127,7 +127,7 @@ body {
   border-color: transparent;
   border-radius: 4px;
   height: 35px;
-  width: 80px;
+  width: 90px;
   font-size: 17px;
   display: flex;
   align-items: center;
@@ -141,7 +141,6 @@ body {
 }
 
 .buttom-bar-container {
-  /* border: 1px solid red; */
   margin-top: 18px;
   margin-left: 10px;
   height: 30px;
@@ -155,6 +154,7 @@ body {
 
 span {
   margin-left: 10px;
+  width: 200px;
 }
 
 .sort {

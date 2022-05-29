@@ -1,31 +1,37 @@
 class PokemonClient {
-  constructor() {
-    this.alreadyFetchedId = null;
-    this.pokemonsId = {};
-    this.listOfFavoritePokemon = [
-      "bulbasaur",
-      "charizard",
-      "onix",
-      "nidoking",
-      "vileplume",
-    ];
-    this.id = "pokemon fetch";
-    this.api = "https://pokeapi.co/api/v2/pokemon/";
-  }
+  alreadyFetchedId = null;
+  pokemonsId = {};
+  listOfFavoritePokemon = [
+    "bulbasaur",
+    "charizard",
+    "onix",
+    "nidoking",
+    "vileplume",
+  ];
+  id = "pokemon fetch";
+  api = "https://pokeapi.co/api/v2/pokemon/";
 
   handleFailedRequest(allRequestsResults) {
     let failedIds;
     let failedRquest;
 
     failedRquest = allRequestsResults.filter((result) => {
-      return result.includes("not found");
+      return result.text.includes("not found");
     });
 
-    if (failedRquest.length > 1) {
-      failedIds = failedRquest.map(removeAllExceptNumbers);
+    if (failedRquest.length === 1) {
+      const text = failedRquest[0].text;
+      const id = removeAllExceptNumbers(text);
+      failedRquest = [{ id, text }];
+    } else if (failedRquest.length > 1) {
+      failedIds = failedRquest.map((obj) => {
+        return removeAllExceptNumbers(obj.text);
+      });
+
       failedIds = failedIds.join(",");
 
-      failedRquest = ["Failed to fetch pokemon with this input: " + failedIds];
+      const text = ["Failed to fetch pokemon with this input: " + failedIds];
+      failedRquest = [{ id: failedIds, text }];
     }
 
     return failedRquest;
@@ -37,18 +43,21 @@ class PokemonClient {
   }
   async fetchPokemon(id) {
     const api = this.api + id;
-    let text;
+    let text, result;
     try {
       const rawResponse = await fetch(api);
       const content = await rawResponse.json();
       this.pokemonsId[content.name] = id;
 
       text = this.createPokemonTask(content.name, content.types);
+      result = { id, text };
     } catch (e) {
       this.pokemonsId[id] = id;
-      text = "pokemon with ID " + id + " was not found";
+      text = "Pokemon with ID " + id + " was not found";
+      result = { id, text };
     }
-    return text;
+
+    return result;
   }
 
   async handleFetchNewPokemons(pokemonsIdToFetch) {
@@ -61,7 +70,7 @@ class PokemonClient {
     const faileRequests = this.handleFailedRequest(allRequestsResults);
 
     const successRequest = allRequestsResults.filter((request) => {
-      return request.includes("Catch");
+      return request.text.includes("Catch");
     });
 
     allRequestsResults = [...successRequest, ...faileRequests];
@@ -93,28 +102,6 @@ class PokemonClient {
       typeArray.push(types[i].type.name);
     }
     return typeArray.join("/");
-  }
-
-  extractNameOutFromText(text) {
-    if (text.includes("Catch")) {
-      return text.split(" ")[1];
-    } else if (text.includes("not found")) {
-      return text.split(" ")[3];
-    } else if (text.includes("fetch")) {
-      return text.split(" ")[7];
-    } else {
-      return "text";
-    }
-  }
-  getPokemonIdByName(text) {
-    let name = this.extractNameOutFromText(text);
-    if (name.includes(",")) {
-      return name;
-    } else if (name === "text") {
-      return name;
-    } else {
-      return this.pokemonsId[name];
-    }
   }
 
   resetData() {
