@@ -1,15 +1,16 @@
 class HtmlEditor {
-  constructor(_itemManager, _pokemonClient) {
-    this.img_src = "./images/delete_icon.svg";
-    this.li_class = "list-item";
-    this.img_class = "list-item-delete-button";
+  emptyTasks = true;
+  clear_all_button;
+  sortDirection = "up";
+
+  img_src = "./images/delete_icon.svg";
+  li_class = "list-item";
+  img_class = "list-item-delete-button";
+  sortArrow;
+  ul;
+  constructor(_itemManager) {
     this.itemManager = _itemManager;
-    this.pokemonClient = _pokemonClient;
-    this.ul = document.getElementById("list");
-    this.emptyTasks = true;
-    this.clear_all_button;
-    this.sortArrow = document.getElementById("sort_arrow");
-    this.sortDirection = "up";
+    this.initElement();
   }
 
   setDisplayEmptyTasks() {
@@ -18,12 +19,8 @@ class HtmlEditor {
     this.emptyTasks = true;
   }
 
-  createNewTag(tagName) {
-    return document.createElement(tagName);
-  }
-
-  setLiTag(li, text) {
-    li.id = this.pokemonClient.getPokemonIdByName(text);
+  setLiTag(li, text, id) {
+    li.id = id;
     li.className = this.li_class;
     li.textContent = text;
   }
@@ -45,7 +42,7 @@ class HtmlEditor {
 
   removeTask(li) {
     if (li.id !== "text") {
-      this.pokemonClient.removePokemonIdFromStorage(li.id);
+      this.itemManager.handleRemovePokemonIdFromStorage(li.id);
     }
     let task = li.textContent;
     this.itemManager.setTaskAmount("-", 1);
@@ -60,12 +57,14 @@ class HtmlEditor {
     }
   }
 
-  addNewTaskOnHtml(text) {
-    let li = this.createNewTag("li");
+  addNewTaskOnHtml(obj) {
+    const text = obj.text;
+    const id = obj.id;
+    let li = document.createElement("li");
 
-    this.setLiTag(li, text);
+    this.setLiTag(li, text, id);
 
-    let img = this.createNewTag("img");
+    let img = document.createElement("img");
     this.setImgTag(img);
 
     img.addEventListener("click", () => {
@@ -81,8 +80,8 @@ class HtmlEditor {
   renderTasksToHtml() {
     let ToDo = this.itemManager.getToDoList();
     this.updatePendingTask();
-    ToDo.forEach((task) => {
-      this.addNewTaskOnHtml(task);
+    ToDo.forEach((obj) => {
+      this.addNewTaskOnHtml(obj);
     });
   }
   changeDIsplayOfElement(displayStatus, id) {
@@ -103,7 +102,6 @@ class HtmlEditor {
   handleClearAllHtml() {
     this.removeAllTasksFromHtml();
     this.itemManager.resetData();
-    this.pokemonClient.resetData();
     this.setDisplayEmptyTasks();
     this.updatePendingTask();
   }
@@ -118,6 +116,7 @@ class HtmlEditor {
   }
   changeDisplayWhenSort() {
     this.removeAllTasksFromHtml();
+    console.log(this.sortDirection);
     if (this.sortDirection === "up") {
       this.applySortDirection(this.sortDirection);
       this.itemManager.sortTasks(this.sortDirection);
@@ -126,6 +125,10 @@ class HtmlEditor {
       this.itemManager.sortTasks(this.sortDirection);
     }
     this.renderTasksToHtml();
+  }
+  initElement() {
+    this.sortArrow = document.getElementById("sort_arrow");
+    this.ul = document.getElementById("list");
   }
   init() {
     this.clear_all_button = document.getElementById("clear_all_button");
