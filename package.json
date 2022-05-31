@@ -1,6 +1,6 @@
 {
   "name": "monday-u-exercises",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Welcome to monday-u official github repository! We are very excited to have you here!   This is going to be so much fun! Here are a few general details:",
   "main": "index.js",
   "type": "module",
