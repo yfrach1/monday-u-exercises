@@ -8,14 +8,14 @@ export const description = {
 };
 
 export const messageToUser = {
-  "delete empty array": "There is no task to delete, try to add one :)",
-  "get empty array": "There is no task to display, try to add one :)",
-  "index out of range": "The index you entered is out of range",
-  "write error": "An error occured while writing JSON Object to File.",
-  "read error": "An error occured while reading JSON File.",
-  "delete successed": "Task deleted successfully",
-  "add task seccessed": "New todo added succseefully",
-  "load successed": "Successfully load all tasks",
+  "delete empty array": "\nThere is no task to delete, try to add one :)\n",
+  "get empty array": "\nThere is no task to display, try to add one :)\n",
+  "index out of range": "\nThe index you entered is out of range\n",
+  "write error": "\nAn error occured while writing JSON Object to File.\n",
+  "read error": "\nAn error occured while reading JSON File.\n",
+  "delete successed": "\nTask deleted successfully\n",
+  "add task seccessed": "\nNew todo added succseefully\n",
+  "load successed": "\nSuccessfully load all tasks\n",
 };
 
 export const pokemonTypeColor = {

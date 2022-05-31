@@ -1,7 +1,7 @@
 {
-  "name": "monday-u-exercises",
-  "version": "1.0.1",
-  "description": "Welcome to monday-u official github repository! We are very excited to have you here!   This is going to be so much fun! Here are a few general details:",
+  "name": "hexdex_cli",
+  "version": "1.0.0",
+  "description": "Welcome to HexDex cli",
   "main": "index.js",
   "type": "module",
   "scripts": {

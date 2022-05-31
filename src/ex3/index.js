@@ -62,25 +62,6 @@ async function deleteTask(index) {
 }
 function printMessageToUser(result) {
   console.log(messageToUser[result]);
-  //   if (result === "delete empty array") {
-  //     console.log("There is no task to delete");
-  //     console.log("try to add one :)");
-  //   } else if (result === "get empty array") {
-  //     console.log("There is no task to display");
-  //     console.log("try to add one :)");
-  //   } else if (result === "index out of range") {
-  //     console.log("The index you entered is out of range");
-  //   } else if (result == "write error") {
-  //     console.log("An error occured while writing JSON Object to File.");
-  //   } else if (result == "read error") {
-  //     console.log("An error occured while reading JSON File.");
-  //   } else if (result === "delete successed") {
-  //     console.log("Todo deleted successfully");
-  //   } else if ((result = "add task seccessed")) {
-  //     console.log("New todo added succseefully");
-  //   } else if ((result = "load successed")) {
-  //     console.log("Successfully load all tasks");
-  //   }
 }
 
 progrem

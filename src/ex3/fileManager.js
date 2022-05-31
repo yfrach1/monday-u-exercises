@@ -15,13 +15,11 @@ class FileManager {
       if (err) {
         return "write error";
       }
-
-      return "add task seccessed";
     });
+    return "add task seccessed";
   }
 
   checkIfTaskExist(text, tasks) {
-    //console.log(tasks);
     let result = false;
     for (let i = 0; i < tasks.length; i++) {
       if (text === tasks[i].text) {
@@ -70,7 +68,7 @@ class FileManager {
       NormalTasks,
       data
     );
-    await this.writeToJsonFile(newData);
+    return await this.writeToJsonFile(newData);
   }
 
   readFromJsonFile() {
@@ -95,6 +93,7 @@ class FileManager {
     console.log(text, "the", typesColored, "type pokemon");
   }
   printData(data) {
+    console.log("Tasks List:");
     data.forEach((obj) => {
       if (obj.id === "text") {
         console.log(obj.text);
@@ -119,7 +118,7 @@ class FileManager {
   async deleteTaskHandler(index) {
     const data = await this.readFromJsonFile();
     const tasks = data.tasks;
-    let result = "delete success";
+    let result = "delete successed";
     if (tasks == false) {
       result = "delete empty array";
     } else if (index >= tasks.length) {

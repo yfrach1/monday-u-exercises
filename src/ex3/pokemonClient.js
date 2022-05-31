@@ -8,7 +8,8 @@ import {
   removeAllExceptNumbers,
 } from "./utils.js";
 class PokemonClient {
-  api = process.env.api;
+  //api = process.env.api;
+  api = "https://pokeapi.co/api/v2/pokemon/";
 
   handleFailedRequest(allRequestsResults) {
     let failedIds;
@@ -41,13 +42,11 @@ class PokemonClient {
     try {
       const rawResponse = await fetch(api);
       const content = await rawResponse.json();
-      this.pokemonsId[content.name] = id;
 
       text = "Catch " + content.name;
       result = { id, text, type: this.getPokemonType(content.types) };
     } catch (e) {
-      console.log(e);
-      this.pokemonsId[id] = id;
+      console.log("e", e);
       text = "Pokemon with ID " + id + " was not found";
       result = { id, text };
     }
