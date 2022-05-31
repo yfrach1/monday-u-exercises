@@ -1,0 +1,4 @@
+{
+  "tasks": [{ "id": "1", "text": "Catch bulbasaur", "type": "grass/poison" }],
+  "fetchedPokemon": ["1"]
+}
