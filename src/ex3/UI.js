@@ -1,10 +1,23 @@
 import chalk from "chalk";
 
 export const description = {
-  add: "Add new task, You can enter:\n\t\t   1 - A number that will be treated as a pokemon id.  \n\t\t   2 - A normal taskd. \n\t\t   3 - A string with pokemons id seperated by comma. \n\t\t   4 - A string with multiply tasks seperated by comma. \n\t\t   5 - A mixed string with pokemon id and tasks.\n",
-  get: "All the tasks you have, will be presente to you (pokemon tasks will have a nice color).\n\n",
-  delete:
-    "You will have the option to delete one index at a time from your tasks list.\n\n",
+  add: [
+    `\nAdd new task, You can enter: 
+          \t\t 1 - A number that will be treated as a pokemon id.
+          \t\t 2 - A normal taskd.
+          \t\t 3 - A string with pokemons id seperated by comma. 
+          \t\t 4 - A string with multiply tasks seperated by comma. 
+          \t\t 5 - A mixed string with pokemons id and tasks.\n\n`,
+    `\nArguments:
+               string      text with tasks or/and pokemon id.\n`,
+  ],
+  get: `\nGet all tasks:
+              All the tasks you have, will be presente to you (pokemon tasks will have a nice color).\n\n`,
+  delete: `\nDelete one or all tasks:
+              You will have the option to delete one task (by index) or go wild and delete all ths tasks.\n\n`,
+  "show pokemon": `\nShow pokemon: 
+              If you have a problem finding specific pokemon from your ToDo list or you just want to see what it looks like,
+                       you can find here a unique image of a pokemon from your ToDo list\n`,
 };
 
 export const messageToUser = {
@@ -14,8 +27,11 @@ export const messageToUser = {
   "write error": "\nAn error occured while writing JSON Object to File.\n",
   "read error": "\nAn error occured while reading JSON File.\n",
   "delete successed": "\nTask deleted successfully\n",
+  "delete all successed": "\nAll tasks deleted successfully\n",
   "add task seccessed": "\nNew todo added succseefully\n",
   "load successed": "\nSuccessfully load all tasks\n",
+  "No added": "\nNo new tasks were added.\n",
+  "show pokemon seccessed": " Pokemon Successfully displayed",
 };
 
 export const pokemonTypeColor = {
@@ -38,4 +54,15 @@ export const pokemonTypeColor = {
   dark: chalk.hex("#705848"),
   fairy: chalk.hex("#EE99AC"),
   unknown: chalk.hex("#68A090"),
+};
+["bulbasaur", "charmander", "squirtle", "pikachu"];
+export const pokemonImageUrl = {
+  bulbasaur:
+    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+  charmander:
+    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
+  squirtle:
+    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png",
+  pikachu:
+    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
 };

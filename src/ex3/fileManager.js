@@ -1,7 +1,6 @@
 import fs from "fs";
 import Input from "./input.js";
 import PokemonClient from "./pokemonClient.js";
-import chalk from "chalk";
 import { pokemonTypeColor } from "./UI.js";
 
 class FileManager {
@@ -13,9 +12,11 @@ class FileManager {
     let jsonContent = JSON.stringify(tasksArray);
     fs.writeFile(this.jsonFilePath, jsonContent, "utf8", function (err) {
       if (err) {
+        console.log(err);
         return "write error";
       }
     });
+
     return "add task seccessed";
   }
 
@@ -39,7 +40,9 @@ class FileManager {
       .map((text) => {
         return { id: "text", text };
       });
-
+    if (!normalTasksToBeAdd.length) {
+      return "normal tasks exist";
+    }
     normalTasksToBeAdd.forEach((task) => {
       tasks.push(task);
     });
@@ -48,38 +51,97 @@ class FileManager {
     newData.tasks = tasks;
     return data;
   }
+  initAddingTasksResults(PokemonsIdArr, NormalTasks) {
+    let newTasksAddingResults = {
+      pokemonFetch: PokemonsIdArr.length ? "succcessed" : null,
+      normalTasks: NormalTasks.length ? "succcessed" : null,
+    };
+    return newTasksAddingResults;
+  }
 
   async getNewTasksArray(PokemonsIdArr, NormalTasks, data) {
-    let newDataAfterFetched = await this.pokemonClient.newPokemonesIdHandler(
-      data,
-      PokemonsIdArr
+    let newData = data;
+
+    let newTasksAddingResults = this.initAddingTasksResults(
+      PokemonsIdArr,
+      NormalTasks
     );
-    const newData = this.newNormalTaskHandler(newDataAfterFetched, NormalTasks);
-    return newData;
+
+    if (PokemonsIdArr.length) {
+      newData = await this.pokemonClient.newPokemonesIdHandler(
+        data,
+        PokemonsIdArr
+      );
+    }
+
+    if (newData === "pokemon id exist") {
+      newTasksAddingResults.pokemonFetch = "all already exists";
+      newData = data;
+    }
+
+    if (NormalTasks.length) {
+      newData = this.newNormalTaskHandler(newData, NormalTasks);
+    }
+    if (newData === "normal tasks exist") {
+      newTasksAddingResults.normalTasks = "all already exists";
+      newData = data;
+    }
+    //console.log(newTasksAddingResults);
+    return { newData, newTasksAddingResults };
+  }
+
+  checkIfThereIsNewDataToWrite(newTasksAddingResults) {
+    let result = false;
+    const { pokemonFetch, normalTasks } = newTasksAddingResults;
+
+    if (pokemonFetch === "succcessed" || normalTasks === "succcessed") {
+      result = true;
+    }
+    return result;
   }
 
   async newTaskHandler(text) {
+    let writeToFileResult = "No added";
     const data = this.readFromJsonFile();
 
     const { PokemonsIdArr, NormalTasks } = this.inputTool.checkInputType(text);
 
-    const newData = await this.getNewTasksArray(
+    const { newData, newTasksAddingResults } = await this.getNewTasksArray(
       PokemonsIdArr,
       NormalTasks,
       data
     );
-    return await this.writeToJsonFile(newData);
+
+    if (this.checkIfThereIsNewDataToWrite(newTasksAddingResults)) {
+      writeToFileResult = await this.writeToJsonFile(newData);
+    }
+
+    return writeToFileResult;
+  }
+
+  initTasksArray() {
+    const tasksArray = {
+      tasks: [],
+      fetchedPokemon: [],
+    };
+
+    return tasksArray;
   }
 
   readFromJsonFile() {
     let data;
+    let tasksArray;
     try {
       data = fs.readFileSync(this.jsonFilePath);
     } catch (e) {
       return "An error occured while reading JSON File.";
     }
+    if (!data.length) {
+      tasksArray = this.initTasksArray();
+    } else {
+      tasksArray = JSON.parse(data);
+    }
 
-    const tasksArray = JSON.parse(data);
     return tasksArray;
   }
 
@@ -92,26 +154,26 @@ class FileManager {
       .join("/");
     console.log(text, "the", typesColored, "type pokemon");
   }
+
   printData(data) {
     console.log("Tasks List:");
     data.forEach((obj) => {
-      if (obj.id === "text") {
-        console.log(obj.text);
-      } else {
-        this.printPokemon(obj.type, obj.text);
-      }
+      console.log(obj.text);
     });
   }
-  async showTasksToUser() {
+
+  async renderTasks() {
     let result = "load successed";
     const data = await this.readFromJsonFile();
     if (typeof data === "string") {
       return data;
     } else if (data.tasks == false) {
       result = "get empty array";
+    } else {
+      const tasks = data.tasks;
+      this.printData(tasks);
     }
-    const tasks = data.tasks;
-    this.printData(tasks);
+
     return result;
   }
 

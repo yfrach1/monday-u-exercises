@@ -1,15 +1,16 @@
 import fetch from "node-fetch";
 import dotenv from "dotenv";
-dotenv.config();
 
+import { pokemonTypeColor } from "./UI.js";
 import {
   combineTwoArrays,
   differenceOfTwoArray,
   removeAllExceptNumbers,
 } from "./utils.js";
+dotenv.config();
+
 class PokemonClient {
-  //api = process.env.api;
-  api = "https://pokeapi.co/api/v2/pokemon/";
+  pokemonApi = "https://pokeapi.co/api/v2/pokemon/";
 
   handleFailedRequest(allRequestsResults) {
     let failedIds;
@@ -31,24 +32,40 @@ class PokemonClient {
       failedIds = failedIds.join(",");
 
       const text = "Failed to fetch pokemon with this input: " + failedIds;
-      failedRquest = [{ id: failedIds, text }];
+      failedRquest = [
+        { id: failedIds, text, name: null, type: null, url: null },
+      ];
     }
 
     return failedRquest;
   }
   async fetchPokemon(id) {
-    const api = this.api + id;
+    const api = this.pokemonApi + id;
     let text, result;
     try {
       const rawResponse = await fetch(api);
       const content = await rawResponse.json();
+      const url = content.sprites.other["official-artwork"].front_default;
 
-      text = "Catch " + content.name;
-      result = { id, text, type: this.getPokemonType(content.types) };
+      const typesColored = this.getPokemonType(content.types)
+        .split("/")
+        .map((type) => {
+          return pokemonTypeColor[type](type);
+        })
+        .join("/");
+      text = "Catch " + content.name + " the " + typesColored + " type pokemon";
+
+      result = {
+        id,
+        text,
+        name: content.name,
+        type: this.getPokemonType(content.types),
+        url,
+      };
     } catch (e) {
       console.log("e", e);
       text = "Pokemon with ID " + id + " was not found";
-      result = { id, text };
+      result = { id, text, name: null, type: null, url: null };
     }
 
     return result;
@@ -81,6 +98,10 @@ class PokemonClient {
       PokemonsIdArr,
       alreadyFetchedIds
     );
+    if (!pokemonsIdToFetch.length) {
+      return "pokemon id exist";
+    }
+
     newData.fetchedPokemon = combineTwoArrays(
       alreadyFetchedIds,
       pokemonsIdToFetch
