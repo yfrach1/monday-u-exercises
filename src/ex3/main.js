@@ -80,16 +80,19 @@ inquirer
         break;
       }
       case "Get all tasks.": {
-        loadTasks();
+        await loadTasks();
+        break;
       }
       case "Delete one or more tasks.": {
         const deleteType = choices["Delete type"];
         const index = choices["index to delete"];
-        deleteTasks(deleteType, index);
+        await deleteTasks(deleteType, index);
+        break;
       }
       case "Show one of our favorite pokemon.": {
         const pokemonName = choices["pokemon to display"];
-        displaypokemonHandler(pokemonName);
+        await displaypokemonHandler(pokemonName);
+        break;
 
         // showPokemonFromToDO();
       }

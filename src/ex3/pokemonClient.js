@@ -63,7 +63,6 @@ class PokemonClient {
         url,
       };
     } catch (e) {
-      console.log("e", e);
       text = "Pokemon with ID " + id + " was not found";
       result = { id, text, name: null, type: null, url: null };
     }

@@ -31,7 +31,7 @@ export const messageToUser = {
   "add task seccessed": "\nNew todo added succseefully\n",
   "load successed": "\nSuccessfully load all tasks\n",
   "No added": "\nNo new tasks were added.\n",
-  "show pokemon seccessed": " Pokemon Successfully displayed",
+  "show pokemon seccessed": "\nPokemon Successfully displayed",
 };
 
 export const pokemonTypeColor = {

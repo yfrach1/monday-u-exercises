@@ -156,7 +156,7 @@ class FileManager {
   }
 
   printData(data) {
-    console.log("Tasks List:");
+    console.log("\nTasks List:");
     data.forEach((obj) => {
       console.log(obj.text);
     });

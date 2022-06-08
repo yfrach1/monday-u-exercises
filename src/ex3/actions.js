@@ -24,13 +24,13 @@ export async function loadTasks() {
 
 export async function deleteTaskByIndex(index) {
   const result = await fileManager.deleteTaskHandler(index);
-  return result;
+  console.log(messageToUser[result]);
 }
 export async function deleteAllTasks() {
   const emptyTasksArray = fileManager.initTasksArray();
   fileManager.writeToJsonFile(emptyTasksArray);
   const result = "delete all successed";
-  return result;
+  console.log(messageToUser[result]);
 }
 
 function printMessageToUser(result) {
@@ -38,18 +38,16 @@ function printMessageToUser(result) {
 }
 
 export async function deleteTasks(deleteType, index) {
-  let result;
   switch (deleteType) {
     case "All tasks": {
-      result = await deleteAllTasks();
+      await deleteAllTasks();
       break;
     }
     case "By index": {
-      result = await deleteTaskByIndex(index);
+      await deleteTaskByIndex(index);
       break;
     }
   }
-  printMessageToUser(result);
 }
 
 async function displayPokemon(url) {

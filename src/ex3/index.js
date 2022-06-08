@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import { Command } from "commander";
 
-import { description, messageToUser } from "./UI.js";
-import { saveTasks, loadTasks, deleteTask } from "./actions.js";
+import { description } from "./UI.js";
+import { saveTasks, loadTasks, deleteTaskByIndex } from "./actions.js";
 
 const progrem = new Command();
 
@@ -32,13 +32,12 @@ progrem
   .description(description.delete)
   .argument("<string>", "index in the list")
   .action(async (index) => {
-    await deleteTask(index);
+    await deleteTaskByIndex(index);
   });
 
 progrem
   .command("show-pokemon")
-  .description(description["show-pokemon"])
-  .argument("<string>", "index in the list")
+  .description(description["show pokemon"])
   .action(async () => {
     await deleteTask(index);
   });
