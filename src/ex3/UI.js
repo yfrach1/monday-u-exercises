@@ -16,8 +16,7 @@ export const description = {
   delete: `\nDelete one or all tasks:
               You will have the option to delete one task (by index) or go wild and delete all ths tasks.\n\n`,
   "show pokemon": `\nShow pokemon: 
-              If you have a problem finding specific pokemon from your ToDo list or you just want to see what it looks like,
-                       you can find here a unique image of a pokemon from your ToDo list\n`,
+              Show one pokemon from our favorite pokemon list\n`,
 };
 
 export const messageToUser = {

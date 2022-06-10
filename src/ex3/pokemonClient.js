@@ -45,28 +45,35 @@ class PokemonClient {
     let text, result;
     try {
       const rawResponse = await fetch(api);
-      //
-      const content = await rawResponse.json();
-      const url = content.sprites.other["official-artwork"].front_default;
+      if (rawResponse.status === 404) {
+        text = "Pokemon with ID " + id + " was not found";
+        result = { id, text, name: null, type: null };
+      } else if (rawResponse.status === 200) {
+        const content = await rawResponse.json();
+        const url = content.sprites.other["official-artwork"].front_default;
+        const typesColored = this.getPokemonType(content.types)
+          .split("/")
+          .map((type) => {
+            return pokemonTypeColor[type](type);
+          })
+          .join("/");
+        text =
+          "Catch " + content.name + " the " + typesColored + " type pokemon";
 
-      const typesColored = this.getPokemonType(content.types)
-        .split("/")
-        .map((type) => {
-          return pokemonTypeColor[type](type);
-        })
-        .join("/");
-      text = "Catch " + content.name + " the " + typesColored + " type pokemon";
-
-      result = {
-        id,
-        text,
-        name: content.name,
-        type: this.getPokemonType(content.types),
-        url,
-      };
+        result = {
+          id,
+          text,
+          name: content.name,
+          type: this.getPokemonType(content.types),
+        };
+      } else {
+        console.log("somthing wrong happend");
+        result = {
+          text: "Unknown error",
+        };
+      }
     } catch (e) {
-      text = "Pokemon with ID " + id + " was not found";
-      result = { id, text, name: null, type: null, url: null };
+      console.log(e);
     }
 
     return result;
