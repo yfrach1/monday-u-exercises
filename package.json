@@ -2,10 +2,13 @@
   "name": "hexdex_todo_cli",
   "version": "1.0.0",
   "description": "Welcome to HexDex ToDo cli",
-  "main": "index.js",
+  "main": "/src/ex3/main.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "hexdex_todo_cli": "src/ex3/main.js"
   },
   "repository": {
     "type": "git",

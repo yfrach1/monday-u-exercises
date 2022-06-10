@@ -1,6 +1,5 @@
 import FileManager from "./fileManager.js";
 import { messageToUser, pokemonImageUrl } from "./UI.js";
-import inquirer from "inquirer";
 
 import asciify from "asciify-image";
 
@@ -82,41 +81,3 @@ export async function displaypokemonHandler(pokemonName) {
   }
   console.log(messageToUser[result]);
 }
-
-// function getPokemonsNames(data) {
-//   const tasks = data.tasks;
-//   const names = tasks.map((task) => {
-//     return task.name;
-//   });
-//   return names;
-// }
-
-// async function getPokemonToBeDisplayed(names) {
-//   console.log(typeof names);
-
-//   await inquirer
-//     .prompt([
-//       {
-//         type: "rawlist",
-//         name: "pokemon to disply",
-//         message: "Please choose the pokemon you want to display",
-//         choices: names,
-//       },
-//     ])
-//     .then((answer) => {
-//       const name = answer["pokemon to disply"];
-//       return name;
-//     });
-// }
-
-// export async function showPokemonFromToDO() {
-//   const data = await fileManager.readFromJsonFile();
-//   let result = "show pokemon seccessed";
-//   if (data.tasks == false) {
-//     result = "show pokemon failed";
-//   } else {
-//     const pokemonsName = await getPokemonsNames(data);
-//     const name = getPokemonToBeDisplayed(pokemonsName);
-//     console.log("names is :", name);
-//   }
-// }

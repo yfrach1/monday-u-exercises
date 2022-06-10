@@ -44,6 +44,7 @@ class PokemonClient {
     let text, result;
     try {
       const rawResponse = await fetch(api);
+      //
       const content = await rawResponse.json();
       const url = content.sprites.other["official-artwork"].front_default;
 
