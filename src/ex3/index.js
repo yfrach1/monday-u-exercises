@@ -35,19 +35,4 @@ progrem
     await deleteTaskByIndex(index);
   });
 
-progrem
-  .command("show-pokemon")
-  .description(description["show pokemon"])
-  .action(async () => {
-    await deleteTask(index);
-  });
-
-progrem
-  .command("delete-all")
-  .description(description.delete)
-  .argument("<string>", "index in the list")
-  .action(async (index) => {
-    await deleteTask(index);
-  });
-
 progrem.parse(process.argv);
