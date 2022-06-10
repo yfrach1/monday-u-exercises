@@ -4,7 +4,7 @@ import {
   saveTasks,
   loadTasks,
   deleteTasks,
-  showPokemonFromToDO,
+  displaypokemonHandler,
 } from "./actions.js";
 
 inquirer
@@ -90,11 +90,8 @@ inquirer
         break;
       }
       case "Show one of our favorite pokemon.": {
-        // const pokemonName = choices["pokemon to display"];
-        // await displaypokemonHandler(pokemonName);
-        // break;
-
-        showPokemonFromToDO();
+        const pokemonName = choices["pokemon to display"];
+        await displaypokemonHandler(pokemonName);
         break;
       }
     }
