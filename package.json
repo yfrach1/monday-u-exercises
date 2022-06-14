@@ -1,0 +1,31 @@
+{
+  "name": "hexdex_todo_cli",
+  "version": "1.0.0",
+  "description": "Welcome to HexDex ToDo cli",
+  "main": "/src/ex3/main.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "hexdex_todo_cli": "src/ex3/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yfrach1/monday-u-exercises.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yfrach1/monday-u-exercises/issues"
+  },
+  "homepage": "https://github.com/yfrach1/monday-u-exercises#readme",
+  "dependencies": {
+    "asciify-image": "^0.1.8",
+    "chalk": "^5.0.1",
+    "commander": "^9.3.0",
+    "dotenv": "^16.0.1",
+    "inquirer": "^8.2.4",
+    "node-fetch": "^3.2.4"
+  }
+}

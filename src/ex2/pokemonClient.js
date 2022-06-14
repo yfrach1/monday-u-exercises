@@ -46,6 +46,7 @@ class PokemonClient {
     let text, result;
     try {
       const rawResponse = await fetch(api);
+      //check status
       const content = await rawResponse.json();
       this.pokemonsId[content.name] = id;
 
