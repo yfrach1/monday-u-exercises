@@ -3,8 +3,9 @@ import Input from "./input.js";
 import PokemonClient from "./pokemonClient.js";
 import { pokemonTypeColor } from "./UI.js";
 
+const jsonFilePath = "./output.json";
+
 class FileManager {
-  jsonFilePath = "./output.json";
   pokemonClient = new PokemonClient();
   inputTool = new Input();
 
