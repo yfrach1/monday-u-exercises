@@ -1,14 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Exercise 1</title>
+  <head>
+    <title>R&D Todo list</title>
     <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+  </head>
+  <body>
+    <div class="content_container">
+      <div class="place_tags">
+        <h1>R&D Todo list</h1>
+        <div class="top_bar_container" id="add_new_task">
+          <input
+            type="text"
+            id="task_input"
+            name="task"
+            minlength="1"
+            maxlength="40"
+            placeholder="Add your new task"
+          />
 
-<h1>Todo list</h1>
+          <button class="add_button" id="add_button">Add</button>
+        </div>
+        <div class="sort" id="sort">
+          <div class="sort_text">sort</div>
+          <img class="sort_arrow" id="sort_arrow" src="../assets/svg/down_arrow.svg"></img>
+        </div>
 
-
-</body>
-<script src="script.js"></script>
+        <div class="empty_tasks_text" id="empty_tasks_text">
+          There is ZERO tasks, lets try to add one.
+        </div>
+        <div class="tasks_list_container" id="tasks_list_container"></div>
+        <div class="buttom_bar_container" id="buttom_bar_container">
+          <p id="amount_of_pending_tasks"></p>
+          <button class="clearAll_button" id="clearAll_button">
+            Clear All
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="script.js"></script>
 </html>
