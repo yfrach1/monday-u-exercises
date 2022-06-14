@@ -6,13 +6,13 @@ export const description = {
           \t\t 1 - A number that will be treated as a pokemon id.
           \t\t 2 - A normal task.
           \t\t 3 - A string with pokemons id seperated by comma. 
-          \t\t 4 - A string with multiply tasks seperated by comma. 
+          \t\t 4 - A string with multiple tasks seperated by comma. 
           \t\t 5 - A mixed string with pokemons id and tasks.\n\n`,
     `\nArguments:
                string      text with tasks or/and pokemon id.\n`,
   ],
   get: `\nGet all tasks:
-              All the tasks you have, will be presente to you (pokemon tasks will have a nice color).\n\n`,
+              All the tasks you have, will be presented to you (pokemon tasks will have a nice color).\n\n`,
   delete: `\nDelete one or all tasks:
               You will have the option to delete one task (by index) or go wild and delete all ths tasks.\n\n`,
   "show pokemon": `\nShow pokemon: 
@@ -54,7 +54,6 @@ export const pokemonTypeColor = {
   fairy: chalk.hex("#EE99AC"),
   unknown: chalk.hex("#68A090"),
 };
-["bulbasaur", "charmander", "squirtle", "pikachu"];
 export const pokemonImageUrl = {
   bulbasaur:
     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
