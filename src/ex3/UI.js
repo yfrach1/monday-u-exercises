@@ -4,7 +4,7 @@ export const description = {
   add: [
     `\nAdd new task, You can enter: 
           \t\t 1 - A number that will be treated as a pokemon id.
-          \t\t 2 - A normal taskd.
+          \t\t 2 - A normal task.
           \t\t 3 - A string with pokemons id seperated by comma. 
           \t\t 4 - A string with multiply tasks seperated by comma. 
           \t\t 5 - A mixed string with pokemons id and tasks.\n\n`,
