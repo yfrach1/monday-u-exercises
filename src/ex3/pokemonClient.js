@@ -81,29 +81,29 @@ class PokemonClient {
 
   async handleFetchNewPokemons(pokemonsIdToFetch) {
     let allRequestsResults;
-    const allFetchRequest = pokemonsIdToFetch.map((pokemonId) => {
+    const allFetchRequests = pokemonsIdToFetch.map((pokemonId) => {
       return this.fetchPokemon(pokemonId);
     });
-    allRequestsResults = await Promise.all(allFetchRequest).catch((err) => {
+    allRequestsResults = await Promise.all(allFetchRequests).catch((err) => {
       console.error(err);
     });
 
     const faileRequests = this.handleFailedRequest(allRequestsResults);
 
-    const successRequest = allRequestsResults.filter((request) => {
+    const successRequests = allRequestsResults.filter((request) => {
       return request.text.includes("Catch");
     });
 
-    allRequestsResults = [...successRequest, ...faileRequests];
+    allRequestsResults = [...successRequests, ...faileRequests];
 
     return allRequestsResults;
   }
 
-  async newPokemonesIdHandler(data, PokemonsIdArr) {
+  async newPokemonesIdHandler(data, pokemonsIdArr) {
     let newData = data;
     const alreadyFetchedIds = data.fetchedPokemon;
     const pokemonsIdToFetch = differenceOfTwoArray(
-      PokemonsIdArr,
+      pokemonsIdArr,
       alreadyFetchedIds
     );
     if (!pokemonsIdToFetch.length) {

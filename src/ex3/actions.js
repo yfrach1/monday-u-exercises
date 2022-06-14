@@ -58,26 +58,8 @@ async function displayPokemon(url) {
       console.error(err);
     });
 }
-export async function displaypokemonHandler(pokemonName) {
+export async function displayPokemonHandler(pokemonName) {
   const result = "show pokemon seccessed";
-
-  switch (pokemonName) {
-    case "bulbasaur": {
-      await displayPokemon(pokemonImageUrl["bulbasaur"]);
-      break;
-    }
-    case "charmander": {
-      await displayPokemon(pokemonImageUrl["charmander"]);
-      break;
-    }
-    case "squirtle": {
-      await displayPokemon(pokemonImageUrl["squirtle"]);
-      break;
-    }
-    case "pikachu": {
-      await displayPokemon(pokemonImageUrl["pikachu"]);
-      break;
-    }
-  }
+  await displayPokemon(pokemonImageUrl[pokemonName]);
   console.log(messageToUser[result]);
 }

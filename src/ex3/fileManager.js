@@ -1,17 +1,15 @@
 import fs from "fs";
-import Input from "./input.js";
 import PokemonClient from "./pokemonClient.js";
 import { pokemonTypeColor } from "./UI.js";
-
+import { getTasksFromInput } from "./input.js";
 const jsonFilePath = "./output.json";
 
 class FileManager {
   pokemonClient = new PokemonClient();
-  inputTool = new Input();
 
   async writeToJsonFile(tasksArray) {
     let jsonContent = JSON.stringify(tasksArray);
-    fs.writeFile(this.jsonFilePath, jsonContent, "utf8", function (err) {
+    fs.writeFile(jsonFilePath, jsonContent, "utf8", function (err) {
       if (err) {
         console.log(err);
         return "write error";
@@ -87,7 +85,7 @@ class FileManager {
       newTasksAddingResults.normalTasks = "all already exists";
       newData = data;
     }
-    //console.log(newTasksAddingResults);
+
     return { newData, newTasksAddingResults };
   }
 
@@ -105,7 +103,7 @@ class FileManager {
     let writeToFileResult = "No added";
     const data = this.readFromJsonFile();
 
-    const { PokemonsIdArr, NormalTasks } = this.inputTool.checkInputType(text);
+    const { PokemonsIdArr, NormalTasks } = getTasksFromInput(text);
 
     const { newData, newTasksAddingResults } = await this.getNewTasksArray(
       PokemonsIdArr,
@@ -133,7 +131,7 @@ class FileManager {
     let data;
     let tasksArray;
     try {
-      data = fs.readFileSync(this.jsonFilePath);
+      data = fs.readFileSync(jsonFilePath);
     } catch (e) {
       return "An error occured while reading JSON File.";
     }

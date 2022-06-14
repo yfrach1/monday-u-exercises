@@ -4,16 +4,16 @@ import { Command } from "commander";
 import { description } from "./UI.js";
 import { saveTasks, loadTasks, deleteTaskByIndex } from "./actions.js";
 
-const progrem = new Command();
+const program = new Command();
 
-progrem
+program
   .description("Cli for ToDo list")
   .name("ToDO")
   .version("1.0.0")
   .option("-h, --help", "This is the help detailed")
   .usage("<command>");
 
-progrem
+program
   .command("add")
   .description(description.add[0])
   .argument("<string>", "text with tasks or/and pokemon id.")
@@ -21,13 +21,13 @@ progrem
     await saveTasks(text);
   });
 
-progrem
+program
   .command("get")
   .description(description.get)
   .action(async () => {
     await loadTasks();
   });
-progrem
+program
   .command("delete")
   .description(description.delete)
   .argument("<string>", "index in the list")
@@ -35,4 +35,4 @@ progrem
     await deleteTaskByIndex(index);
   });
 
-progrem.parse(process.argv);
+program.parse(process.argv);
