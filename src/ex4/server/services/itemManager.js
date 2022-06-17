@@ -38,11 +38,9 @@ function newNormalTaskHandler(data, newNormalTasks) {
     .map((text) => {
       return { itemId: generateUniqeId(), text, type: "normal tasks" };
     });
-  console.log(normalTasksToBeAdd);
 
   normalTasksToBeAdd.forEach((task) => {
     task.text = capitalizeFirstLetter(task.text);
-    console.log(tasks);
     tasks.push(task);
   });
 
