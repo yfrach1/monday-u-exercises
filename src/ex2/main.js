@@ -2,7 +2,7 @@ class Main {
   pokemonClient = new PokemonClient();
   itemManager = new ItemManager(this.pokemonClient);
   inputHandler = new Input();
-  htmlEditor = new HtmlEditor(this.itemManager);
+  htmlEditor = new HtmlManager(this.itemManager);
   addButten;
   sortButton;
   input;

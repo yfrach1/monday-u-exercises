@@ -1,4 +1,4 @@
-class HtmlEditor {
+class HtmlManager {
   emptyTasks = true;
   clear_all_button;
   sortDirection = "up";
@@ -13,6 +13,12 @@ class HtmlEditor {
     this.initElement();
   }
 
+  getInputFromUser() {
+    const input = document.getElementById("list-item-input");
+    const inputValue = input.value;
+    input.value = "";
+    return inputValue;
+  }
   setDisplayEmptyTasks() {
     this.changeDIsplayOfElement("none", "buttom_bar_container");
     this.changeDIsplayOfElement("none", "sort");
@@ -116,7 +122,7 @@ class HtmlEditor {
   }
   changeDisplayWhenSort() {
     this.removeAllTasksFromHtml();
-    console.log(this.sortDirection);
+    //console.log(this.sortDirection);
     if (this.sortDirection === "up") {
       this.applySortDirection(this.sortDirection);
       this.itemManager.sortTasks(this.sortDirection);

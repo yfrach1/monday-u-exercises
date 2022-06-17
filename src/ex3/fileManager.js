@@ -50,6 +50,7 @@ class FileManager {
     newData.tasks = tasks;
     return data;
   }
+
   initAddingTasksResults(PokemonsIdArr, NormalTasks) {
     let newTasksAddingResults = {
       pokemonFetch: PokemonsIdArr.length ? "succcessed" : null,
@@ -98,7 +99,7 @@ class FileManager {
     }
     return result;
   }
-
+  //start 1
   async newTaskHandler(text) {
     let writeToFileResult = "No added";
     const data = this.readFromJsonFile();
