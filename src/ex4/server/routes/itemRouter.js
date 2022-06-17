@@ -2,13 +2,18 @@
 const express = require("express");
 
 const {
-  createNewItem,
-  getAllTasksFromFile,
+  addNewInputHandler,
+  getAllTasksHandler,
+  deleteTaskHandler,
+  deleteAllTaskHandler,
+  sortTasksHandler,
 } = require("../controllers/itemController");
 const itemRouter = express.Router();
 
-itemRouter.get("/", getAllTasksFromFile);
-itemRouter.delete("/:id", (req, res) => res.status(200).send("hello world"));
-itemRouter.post("/", createNewItem);
+itemRouter.get("/", getAllTasksHandler);
+itemRouter.get("/sort/:direction", sortTasksHandler);
+itemRouter.delete("/:id", deleteTaskHandler);
+itemRouter.delete("/", deleteAllTaskHandler);
+itemRouter.post("/", addNewInputHandler);
 
 module.exports = itemRouter;

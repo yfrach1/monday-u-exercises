@@ -1,17 +1,43 @@
-const itemManager = require("../services/item_manager");
+const itemManager = require("../services/itemManager");
 
-async function createNewItem(req, res) {
-  console.log("req body: ", req.body);
+async function addNewInputHandler(req, res) {
+  const input = req.body.body;
+  try {
+    const result = await itemManager.newInputHandler(input);
+    return res.status(result.status).send(result.data);
+  } catch (e) {
+    return res.status(400).send(e);
+  }
 }
 
-async function getAllTasksFromFile(req, res) {
-  const data = await itemManager.readFromJsonFile();
-  console.log("123");
-  return {};
-  return res.status(200).send(data);
+async function getAllTasksHandler(req, res) {
+  const result = await itemManager.getTasks();
+  return res.status(result.status).send(result.data);
+}
+
+async function deleteTaskHandler(req, res) {
+  const id = req.params.id;
+
+  const result = await itemManager.deleteTaskByIdHandler(id);
+
+  return res.status(result.status).send(result.data);
+}
+async function deleteAllTaskHandler(req, res) {
+  const result = await itemManager.deleteAllTaskHandler();
+
+  return res.status(result.status).send(result.data);
+}
+
+async function sortTasksHandler(req, res) {
+  const sortDirection = req.params.direction;
+  const result = await itemManager.sortTasksHandler(sortDirection);
+  return res.status(result.status).send(result.data);
 }
 
 module.exports = {
-  createNewItem,
-  getAllTasksFromFile,
+  addNewInputHandler,
+  getAllTasksHandler,
+  deleteTaskHandler,
+  deleteAllTaskHandler,
+  sortTasksHandler,
 };

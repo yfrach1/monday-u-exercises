@@ -1,6 +1,7 @@
 class Main {
   constructor() {
     this.itemClient = new ItemClient();
+    this.htmlManager = new HtmlManager(this.itemClient);
   }
 
   init = async () => {
@@ -8,50 +9,25 @@ class Main {
     addItemButton.addEventListener("click", () => {
       this.handleNewInput();
     });
-
-    await this.renderItems(); // this will make it so that any time you refresh the page you'll see the items already in your todo list
+    const inputButton = document.getElementById("list-item-input");
+    inputButton.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        this.handleNewInput();
+      }
+    });
+    const data = await this.itemClient.getAllTasks();
+    await this.htmlManager.renderTasksToHtml(data);
   };
 
   handleNewInput = async () => {
-    // implement
-    const input = document.getElementById("list-item-input");
-    const inputValue = input.value;
-    input.value = "";
+    const inputValue = this.htmlManager.getInputFromUser();
     if (!inputValue) {
       alert("Empty task is for lazy :)");
       return;
     }
-    this.itemClient.handleNewItem(inputValue);
-  };
 
-  deleteItem = async (item) => {
-    // implement
-  };
-
-  renderItems = async () => {
-    const list = document.getElementById("list");
-    list.innerHTML = "";
-
-    const items = await this.itemClient.getAllTasks();
-
-    items.forEach((item) => {
-      const listItem = document.createElement("li");
-      listItem.classList.add("list-item");
-      listItem.innerHTML = item;
-
-      const listItemDeleteButton = this._createDeleteButton(item);
-      listItem.appendChild(listItemDeleteButton);
-      list.appendChild(listItem);
-    });
-  };
-
-  _createDeleteButton = (item) => {
-    const button = document.createElement("img");
-    button.src = "./images/delete_icon.svg";
-    button.classList.add("list-item-delete-button");
-    button.addEventListener("click", (_) => this.deleteItem(item));
-
-    return button;
+    const data = await this.itemClient.handleNewItem(inputValue);
+    await this.htmlManager.renderTasksToHtml(data);
   };
 }
 
