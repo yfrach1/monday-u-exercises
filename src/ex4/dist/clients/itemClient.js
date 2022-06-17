@@ -18,7 +18,6 @@ class ItemClient {
     }
 
     const data = response.data;
-
     return data;
   }
 

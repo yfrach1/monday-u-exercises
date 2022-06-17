@@ -16,6 +16,7 @@ class Main {
       }
     });
     const data = await this.itemClient.getAllTasks();
+
     await this.htmlManager.renderTasksToHtml(data);
   };
 

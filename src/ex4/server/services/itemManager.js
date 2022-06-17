@@ -59,7 +59,7 @@ async function getNewTasksArray(PokemonsIdArr, NormalTasks, data) {
   );
 
   if (PokemonsIdArr.length) {
-    newData = []; //await pokemonClient.newPokemonesIdHandler(data, PokemonsIdArr);
+    newData = await pokemonClient.newPokemonesIdHandler(data, PokemonsIdArr);
   }
   if (NormalTasks.length) {
     newData = newNormalTaskHandler(newData, NormalTasks);
@@ -78,16 +78,13 @@ function checkIfThereIsNewDataToWrite(newTasksAddingResults) {
   return result;
 }
 
-function extractDataFromResponse(response) {
-  const data = response.data;
-  return data;
-}
-
 async function newInputHandler(input) {
-  let writeToFileResult = "No added";
   const readResponse = await fileManager.readFromJsonFile();
+  if (readResponse.status != 200) {
+    return readResponse;
+  }
 
-  const data = extractDataFromResponse(readResponse);
+  const data = readResponse.data;
 
   const { pokemonsIdArr, normalTasks } = getTasksFromInput(input);
 
@@ -96,6 +93,11 @@ async function newInputHandler(input) {
     normalTasks,
     data
   );
+  let writeToFileResult = {
+    status: 200,
+    message: "not write new tasks to file",
+    data: data,
+  };
   if (checkIfThereIsNewDataToWrite(newTasksAddingResults)) {
     writeToFileResult = await fileManager.writeToJsonFile(newData);
   }
