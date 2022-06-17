@@ -1,5 +1,3 @@
-// The Pokemon Client (using axios) goes here
-
 const {
   combineTwoArrays,
   differenceOfTwoArray,

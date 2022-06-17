@@ -1,9 +1,3 @@
-// The ItemManager should go here. Remember that you have to export it.
-// const {
-//   isTextContainOnlyNumbersAndSpaces,
-//   removeDuplicate,
-// } = require("../utils/utils");
-
 const { getTasksFromInput } = require("./input");
 const { generateUniqeId, capitalizeFirstLetter } = require("../utils/utils");
 const fileManager = require("./fileManager");
@@ -65,7 +59,7 @@ async function getNewTasksArray(PokemonsIdArr, NormalTasks, data) {
   );
 
   if (PokemonsIdArr.length) {
-    newData = await pokemonClient.newPokemonesIdHandler(data, PokemonsIdArr);
+    newData = []; //await pokemonClient.newPokemonesIdHandler(data, PokemonsIdArr);
   }
   if (NormalTasks.length) {
     newData = newNormalTaskHandler(newData, NormalTasks);
