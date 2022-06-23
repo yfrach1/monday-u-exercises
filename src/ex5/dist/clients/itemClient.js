@@ -6,78 +6,101 @@ class ItemClient {
     this.tasksAmount;
   }
   async getAllTasks() {
-    let response;
-
     try {
-      response = await axios.get("http://localhost:3042/items");
+      const response = await axios.get("http://localhost:3042/items");
+      return response.data;
     } catch (e) {
-      alert(`An error occured while reading JSON File,
-         Tasks not loaded from file`);
-      return null;
+      const status = error.response.status;
+      const errorMessage = `Request failed with status code ${status}
+${error.response.data}`;
+      alert(errorMessage);
+      return [];
     }
-
-    const data = response.data;
-    return data;
   }
 
   async handleNewItem(userInput) {
-    let response;
     const newItem = {
-      title: "A new input from user",
-      body: userInput,
+      input: userInput,
     };
 
     try {
-      response = await axios.post(`${this.url}item`, newItem);
-    } catch (e) {
-      alert(e);
+      const response = await axios.post(`${this.url}item`, newItem);
+      return response.data;
+    } catch (error) {
+      const status = error.response.status;
+      const errorMessage = `Request failed with status code ${status}
+${error.response.data}`;
+      alert(errorMessage);
+      return [];
     }
-    const data = response.data;
-    return data;
   }
 
   async deleteTaskById(item) {
-    let response;
     const id = item.id;
     const deleteByIdUrl = `${this.url}item/${id}`;
     try {
-      response = await axios.delete(deleteByIdUrl);
-    } catch (e) {
-      alert(`An error occured while delete task by index,
-         Task not deleted`);
-      return null;
+      const response = await axios.delete(deleteByIdUrl);
+      return response.data;
+    } catch (error) {
+      const status = error.response.status;
+      const errorMessage = `Request failed with status code ${status}
+${error.response.data}`;
+      alert(errorMessage);
+      return [];
     }
-    const data = response.data;
-    return data;
   }
 
   async deleteAllTasks() {
-    let response;
     const deleteAllUrl = `${this.url}items`;
 
     try {
-      response = await axios.delete(deleteAllUrl);
-    } catch (e) {
-      alert(`An error occured while delete all tasks,
-         Tasks not deleted`);
-      return null;
+      await axios.delete(deleteAllUrl);
+    } catch (error) {
+      const status = error.response.status;
+      const errorMessage = `Request failed with status code ${status}
+${error.response.data}`;
+      alert(errorMessage);
     }
-
-    const data = response.data;
-    return data;
   }
 
   async sortTasks(sortDirection) {
-    let response;
-    const sortPath = `http://localhost:8080/tasks/sort/${sortDirection}`;
+    const sortPath = `http://localhost:3042/items/sort/${sortDirection}`;
     try {
-      response = await axios.get(sortPath);
-    } catch (e) {
-      alert(`An error occured while trying to sort the Tasks`);
-      return null;
+      const response = await axios.get(sortPath);
+      return response.data;
+    } catch (error) {
+      const status = error.response.status;
+      const errorMessage = `Request failed with status code ${status}
+${error.response.data}`;
+      alert(errorMessage);
+      return [];
     }
+  }
 
-    const data = response.data;
-    return data;
+  async flipStatus(item) {
+    const id = item.id;
+    const updateStatusUrl = `${this.url}item/status/${id}`;
+    try {
+      const response = await axios.patch(updateStatusUrl);
+      return response.data;
+    } catch (error) {
+      const status = error.response.status;
+      const errorMessage = `Request failed with status code ${status}
+${error.response.data}`;
+      alert(errorMessage);
+    }
+  }
+
+  async updateTaskText(id, text) {
+    const updateTaskTextUrl = `${this.url}item/text/${id}/${text}`;
+    try {
+      const response = await axios.patch(updateTaskTextUrl);
+      //return response.data;
+    } catch (error) {
+      const status = error.response.status;
+      const errorMessage = `Request failed with status code ${status}
+${error.response.data}`;
+      alert(errorMessage);
+    }
   }
 }

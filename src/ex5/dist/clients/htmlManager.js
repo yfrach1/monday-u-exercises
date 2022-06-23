@@ -1,7 +1,7 @@
 class HtmlManager {
   constructor(_itemClient) {
     this.itemClient = _itemClient;
-    this.sortDirection = "up";
+    this.sortDirection = "down";
     this.sortButton = document.getElementById("sort_arrow");
     this.ul = document.getElementById("list");
     this.emptyTasks = true;
@@ -9,27 +9,35 @@ class HtmlManager {
     this.init();
   }
 
-  async _setDisplayNotEmptyTasks() {
+  _getDeleteButton = (id) => document.getElementById(`delete_button_${id}`);
+  _getEditButton = (id) => document.getElementById(`edit_button_${id}`);
+  _getSaveButton = (id) => document.getElementById(`save_button_${id}`);
+
+  _setDisplayNotEmptyTasks() {
     document.getElementById("buttom_bar_container").style.display = "flex";
     document.getElementById("sort").style.display = "flex";
     this.emptyTasks = false;
   }
 
-  async _setDisplayEmptyTasks() {
+  _setDisplayEmptyTasks() {
     document.getElementById("buttom_bar_container").style.display = "none";
     document.getElementById("sort").style.display = "none";
     this.emptyTasks = true;
   }
 
-  _setLiTag(li, text, id) {
+  _createInputTag = (text, id) => {
+    const input = document.createElement("input");
+    input.classList.add("input-text");
+    input.id = `input_${id}`;
+    input.type = "text";
+    input.readOnly = true;
+    input.value = text;
+    return input;
+  };
+
+  _setLiTag(li, id) {
     li.id = id;
     li.classList.add("list-item");
-    li.textContent = text;
-  }
-
-  _setImgTag(img) {
-    img.src = this.img_src;
-    img.className = this.img_class;
   }
 
   _addNewLiToHtml(li) {
@@ -41,13 +49,125 @@ class HtmlManager {
     span.innerText = "You have " + tasksAmount + " pending tasks";
   }
 
+  _deleteItem = async (item) => {
+    const data = await this.itemClient.deleteTaskById(item);
+    await this.renderTasksToHtml(data);
+  };
+
   _createDeleteButton = (item) => {
     const button = document.createElement("img");
+    button.id = `delete_button_${item.id}`;
     button.src = "./images/delete_icon.svg";
     button.classList.add("list-item-delete-button");
-    button.addEventListener("click", (_) => this._deleteItem(item));
+    button.addEventListener("click", () => this._deleteItem(item));
 
     return button;
+  };
+
+  _setDisplayStatusIsChecked = (editButton, deleteButton) => {
+    editButton.style.display = "none";
+    deleteButton.style.marginLeft = "auto";
+  };
+
+  _setDisplayStatusIsUnChecked = (editButton, deleteButton) => {
+    editButton.style.display = "";
+    deleteButton.style.marginLeft = "";
+  };
+
+  _changeStatusOnClick = async (item) => {
+    const itemId = item.id;
+    const itemAfterChangeStatus = await this.itemClient.flipStatus(item);
+    const newStatus = itemAfterChangeStatus.status;
+    const editButton = this._getEditButton(itemId);
+    const deleteButton = this._getDeleteButton(itemId);
+    if (newStatus) {
+      this._setDisplayStatusIsChecked(editButton, deleteButton);
+    } else {
+      this._setDisplayStatusIsUnChecked(editButton, deleteButton);
+    }
+
+    const inputId = `input_${itemId}`;
+    const input = document.getElementById(inputId);
+    input.classList.toggle("input-text-task-done");
+  };
+
+  _createStatusCheckbox = (item) => {
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    if (item.status) {
+      input.checked = "true";
+    }
+    input.addEventListener("change", () => this._changeStatusOnClick(item));
+    return input;
+  };
+
+  _checkIfStatusIsChecked = (item, span) => {
+    if (item.status) {
+      span.classList.toggle("input-text-task-done");
+    }
+  };
+
+  _displaySaveButtonAndHideEditButton = (id) => {
+    const editButton = this._getEditButton(id);
+    editButton.style.display = "none";
+    const saveButton = this._getSaveButton(id);
+    saveButton.style.display = "";
+  };
+  _displayEditButtonAndHideSaveButton = (id) => {
+    const editButton = this._getEditButton(id);
+    editButton.style.display = "";
+    const saveButton = this._getSaveButton(id);
+    saveButton.style.display = "none";
+  };
+
+  _setEditPropertiesOn = (inputId) => {
+    const input = document.getElementById(inputId);
+    input.style.border = "2px solid #C0C0C0";
+    input.style.borderRadius = "5px";
+    input.style.cursor = "text";
+    input.readOnly = false;
+  };
+  _setEditPropertiesOff = (inputId) => {
+    const input = document.getElementById(inputId);
+    input.style.border = "none";
+    input.style.borderRadius = "none";
+    input.style.cursor = "pointer";
+    input.readOnly = true;
+    return input;
+  };
+  _editTaskText = (id) => {
+    this._displaySaveButtonAndHideEditButton(id);
+    this._setEditPropertiesOn(`input_${id}`);
+  };
+
+  _createEditButton = (item) => {
+    const editButton = document.createElement("img");
+    editButton.id = `edit_button_${item.id}`;
+    editButton.src = "./images/edit_icon.svg";
+    editButton.classList.add("list-item-edit-button");
+    editButton.addEventListener("click", () => {
+      this._editTaskText(item.id);
+    });
+    return editButton;
+  };
+
+  _saveTaskText = async (item) => {
+    const inputId = `input_${item.id}`;
+    const input = this._setEditPropertiesOff(inputId);
+    const newText = input.value;
+    await this.itemClient.updateTaskText(item.id, newText);
+    this._displayEditButtonAndHideSaveButton(item.id);
+  };
+  _createSaveButton = (item) => {
+    const saveButton = document.createElement("img");
+    saveButton.id = `save_button_${item.id}`;
+    saveButton.src = "./images/save_icon.svg";
+    saveButton.style.display = "none";
+    saveButton.classList.add("list-item-edit-button");
+    saveButton.addEventListener("click", () => {
+      this._saveTaskText(item);
+    });
+    return saveButton;
   };
 
   _createNewLiTag(item) {
@@ -55,17 +175,31 @@ class HtmlManager {
     const id = item.id;
     let li = document.createElement("li");
 
-    this._setLiTag(li, text, id);
+    const inputCheckbox = this._createStatusCheckbox(item);
+    li.appendChild(inputCheckbox);
+
+    const input = this._createInputTag(text, id);
+    li.appendChild(input);
+
+    this._setLiTag(li, id);
+    this._checkIfStatusIsChecked(item, input);
+
+    const editButton = this._createEditButton(item);
+    const saveButton = this._createSaveButton(item);
+    li.appendChild(editButton);
+    li.appendChild(saveButton);
+
     const liDeleteButton = this._createDeleteButton(item);
     li.appendChild(liDeleteButton);
+
     return li;
   }
 
   async _setButtomBarDisplay(tasksAmount) {
     if (tasksAmount) {
-      await this._setDisplayNotEmptyTasks();
+      this._setDisplayNotEmptyTasks();
     } else {
-      await this._setDisplayEmptyTasks();
+      this._setDisplayEmptyTasks();
     }
   }
 
@@ -79,8 +213,6 @@ class HtmlManager {
     if (data === null) {
       return;
     }
-    //const tasksList = data.map((item) => item.itemName);
-    //console.log("tasksList: ", tasksList);
     const tasksAmount = data.length;
     this._setButtomBarDisplay(tasksAmount);
     this._updatePendingTask(tasksAmount);
@@ -94,10 +226,10 @@ class HtmlManager {
   _applySortDirection(direction) {
     if (direction === "down") {
       this.sortDirection = "up";
-      this.sortButton.src = "./images/up_arrow.svg";
+      this.sortButton.src = "./images/down_arrow.svg";
     } else {
       this.sortDirection = "down";
-      this.sortButton.src = "./images/down_arrow.svg";
+      this.sortButton.src = "./images/up_arrow.svg";
     }
   }
 
@@ -110,11 +242,6 @@ class HtmlManager {
     }
     return inputValue;
   }
-
-  _deleteItem = async (item) => {
-    const data = await this.itemClient.deleteTaskById(item);
-    await this.renderTasksToHtml(data);
-  };
 
   _handleClearAllTasks() {
     this.itemClient.deleteAllTasks();

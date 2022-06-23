@@ -54,6 +54,15 @@ function generateUniqeId() {
   return uuidv4();
 }
 
+function initActionResult(status, message, data) {
+  const result = {
+    status,
+    message,
+    data,
+  };
+  return result;
+}
+
 module.exports = {
   removeItemFromArray,
   capitalizeFirstLetter,
@@ -66,4 +75,5 @@ module.exports = {
   combineTwoArrays,
   removeDuplicate,
   generateUniqeId,
+  initActionResult,
 };

@@ -1,22 +1,10 @@
 const { getTasksFromInput } = require("./input");
-const {
-  generateUniqeId,
-  capitalizeFirstLetter,
-  combineTwoArrays,
-} = require("../utils/utils");
+const { capitalizeFirstLetter, combineTwoArrays } = require("../utils/utils");
 const { Items } = require("../db/models");
-const fileManager = require("./fileManager");
 const pokemonClient = require("../clients/pokemonClient");
-const fs = require("fs");
 
 async function getAllTasksHandler() {
-  const data = await getTasksFromDB();
-  console.log("data:", data);
-  return {
-    status: 200,
-    message: "successsed to read from DB",
-    data,
-  };
+  return await getTasksFromDB();
 }
 
 function checkIfTaskExist(newTask, tasksList) {
@@ -30,9 +18,31 @@ function checkIfTaskExist(newTask, tasksList) {
   return result;
 }
 
-async function getTasksFromDB() {
-  const allItems = await Items.findAll();
-  return allItems;
+getSortOrder = (direction) => {
+  let order;
+  if (direction === "down") {
+    order = {
+      order: [["itemName", "DESC"]],
+    };
+  } else {
+    order = {
+      order: [["itemName", "ASC"]],
+    };
+  }
+  return order;
+};
+
+async function getTasksFromDB(direction = null) {
+  let order = {};
+  if (direction !== null) {
+    order = getSortOrder(direction);
+  }
+  try {
+    const allItems = await Items.findAll(order);
+    return allItems;
+  } catch (error) {
+    throw new Error("Read data from DB Failed.");
+  }
 }
 
 async function addNewTasksToDB(newTasks) {
@@ -42,82 +52,116 @@ async function addNewTasksToDB(newTasks) {
       status: false,
     };
   });
-  await Items.bulkCreate(newTasksRow);
+
+  try {
+    const newItems = await Items.bulkCreate(newTasksRow);
+    return newItems;
+  } catch (error) {
+    throw new Error("Write new data to DB Failed.");
+  }
 }
+
+pokemonFetchedResultHandler = (pokemonFetchedResult) => {
+  const succssesResultsData = pokemonFetchedResult
+    .filter((result) => {
+      return result.getRequestResult === "success";
+    })
+    .map((result) => result.data);
+
+  const failedResultsId = pokemonFetchedResult
+    .filter((result) => {
+      return result.getRequestResult === "failed";
+    })
+    .map((result) => result.id);
+
+  const results = { succssesResultsData, failedResultsId };
+  return results;
+};
+
+failedRequestHandler = (failedResultsId) => {
+  let text = [];
+  if (failedResultsId.length === 1) {
+    const id = failedResultsId[0];
+    text = [`Pokemon with ID ${id} was not found`];
+  } else if (failedResultsId.length > 1) {
+    const failedIds = failedResultsId.join(",");
+    text = [`Failed to fetch pokemon with this input: ${failedIds}`];
+  }
+
+  return text;
+};
+
+function createPokemonTask(data) {
+  return `Catch ${data.name}`;
+}
+
+successRequestHandler = (succssesResultsData) => {
+  const pokemonsSuccessTask = succssesResultsData.map((pokemonData) => {
+    return createPokemonTask(pokemonData);
+  });
+  return pokemonsSuccessTask;
+};
+
+newPokemonsIdHandler = async (pokemonsIdArr) => {
+  const pokemonFetchedResult = await pokemonClient.fetchePokemonsIdHandler(
+    pokemonsIdArr
+  );
+
+  const { succssesResultsData, failedResultsId } =
+    pokemonFetchedResultHandler(pokemonFetchedResult);
+  const failedPokemonTask = failedRequestHandler(failedResultsId);
+  const successPokemonsTask = successRequestHandler(succssesResultsData);
+
+  const pokemonTasks = [...successPokemonsTask, ...failedPokemonTask];
+  return pokemonTasks;
+};
 
 async function newInputHandler(input) {
   let newPokemonTasks = [];
 
   const { pokemonsIdArr, normalTasks } = getTasksFromInput(input);
-  console.log("pokemonsIdArr: ", pokemonsIdArr);
+
   if (pokemonsIdArr.length) {
-    newPokemonTasks = await pokemonClient.newPokemonesIdHandler(pokemonsIdArr);
+    newPokemonTasks = await newPokemonsIdHandler(pokemonsIdArr);
   }
 
   const newTasks = combineTwoArrays(newPokemonTasks, normalTasks);
 
   const data = await getTasksFromDB();
+
   const tasksList = data.map((item) => item.itemName);
-  console.log("tasksList:", tasksList);
+
   const newTasksToAdd = newTasks.filter(
     (task) => !checkIfTaskExist(task, tasksList)
   );
 
-  const addTasksToDBResult = await addNewTasksToDB(newTasksToAdd);
+  const newItems = await addNewTasksToDB(newTasksToAdd);
+  const dataAfterAddNewItems = [...data, ...newItems];
 
-  const DataAfterAddNewTasks = await getTasksFromDB();
-
-  return {
-    status: 200,
-    message: "successfully write data to DB",
-    data: DataAfterAddNewTasks,
-  };
-}
-
-function initActionResult(status, message, data) {
-  const result = {
-    status,
-    message,
-    data,
-  };
-  return result;
+  return dataAfterAddNewItems;
 }
 
 async function deleteTaskById(id) {
-  const result = await Items.destroy({ where: { id } });
-  console.log("result of delete:", result);
-
-  const data = await Items.findAll();
-  return {
-    status: 200,
-    message: " delete item successed",
-    data,
-  };
+  try {
+    await Items.destroy({ where: { id } });
+  } catch (error) {
+    throw new Error("Error while trying to delete an item");
+  }
+  const data = await getTasksFromDB();
+  return data;
 }
 
 async function deleteTaskByIdHandler(id) {
-  const deleteResult = await deleteTaskById(id);
-
-  if (deleteResult.status != 200) {
-    return deleteResult;
-  }
-
-  let data = deleteResult.data;
-  const writeResult = await fileManager.writeToJsonFile(data);
-
-  return writeResult;
+  return await deleteTaskById(id);
 }
 
-async function deleteAllTaskHandler() {
-  const amountOfRowsDeleted = await Items.destroy({
+deleteAllTasks = async () => {
+  await Items.destroy({
     where: {},
-    restartIdentity: true,
   });
-  console.log("amountOfRowsDeleted: ", amountOfRowsDeleted);
-  return {
-    status: 200,
-    message: "successfully delete all items",
-  };
+};
+async function deleteAllTaskHandler() {
+  await deleteAllTasks();
 }
 
 async function sortTasks(data, direction) {
@@ -138,32 +182,39 @@ async function sortTasks(data, direction) {
 }
 
 async function sortTasksHandler(sortDirection) {
-  let response;
-  let readResult;
-  response = await getTasks();
-  if (response.status != 200) {
-    readResult = initActionResult(
-      response.status,
-      "Failed to sort tasks",
-      null
-    );
-    return readResult;
-  }
-  const data = response.data;
+  const data = await getTasksFromDB(sortDirection);
 
-  const tasksList = await sortTasks(data, sortDirection);
-  const dataAfterSort = {
-    tasks: tasksList,
-    fetchedPokemon: data.fetchedPokemon,
-  };
-  const writeResult = await fileManager.writeToJsonFile(dataAfterSort);
-
-  return writeResult;
+  return data;
 }
+
+flipTaskStatus = async (id) => {
+  const item = await Items.findOne({ where: { id } });
+  const currentStatus = item.status;
+  return await item.update({
+    status: !currentStatus,
+    doneAt: new Date(),
+    updateAt: new Date(),
+  });
+};
+flipTaskStatusHandler = async (id) => {
+  const item = await flipTaskStatus(id);
+  await getTasksFromDB();
+  return item;
+};
+
+updateItemTextHandler = async (id, text) => {
+  const item = await Items.findOne({ where: { id } });
+  await item.update({
+    itemName: text,
+    updateAt: new Date(),
+  });
+};
 module.exports = {
   getAllTasksHandler,
   newInputHandler,
   deleteTaskByIdHandler,
   deleteAllTaskHandler,
   sortTasksHandler,
+  flipTaskStatusHandler,
+  updateItemTextHandler,
 };

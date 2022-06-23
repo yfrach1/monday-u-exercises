@@ -16,7 +16,7 @@ class Main {
       }
     });
     const data = await this.itemClient.getAllTasks();
-    console.log(data);
+
     await this.htmlManager.renderTasksToHtml(data);
   };
 
@@ -28,7 +28,7 @@ class Main {
     }
 
     const data = await this.itemClient.handleNewItem(inputValue);
-    console.log(data);
+
     if (data.length) {
       await this.htmlManager.renderTasksToHtml(data);
     }

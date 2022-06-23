@@ -14,6 +14,8 @@ module.exports = (sequelize, DataTypes) => {
   Items.init(
     {
       itemName: DataTypes.STRING,
+      status: DataTypes.BOOLEAN,
+      doneAt: DataTypes.DATE,
     },
     {
       sequelize,
