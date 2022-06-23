@@ -94,8 +94,7 @@ ${error.response.data}`;
   async updateTaskText(id, text) {
     const updateTaskTextUrl = `${this.url}item/text/${id}/${text}`;
     try {
-      const response = await axios.patch(updateTaskTextUrl);
-      //return response.data;
+      await axios.patch(updateTaskTextUrl);
     } catch (error) {
       const status = error.response.status;
       const errorMessage = `Request failed with status code ${status}

@@ -164,26 +164,9 @@ async function deleteAllTaskHandler() {
   await deleteAllTasks();
 }
 
-async function sortTasks(data, direction) {
-  const tasksList = data.tasks;
-  const tasksText = tasksList.map((task) => task.text);
-  tasksText.sort();
-
-  let newTasksArray = tasksText.map((text) => {
-    const task = tasksList.find((task) => task.text === text);
-    return task;
-  });
-
-  if (direction === "up") {
-    newTasksArray.reverse();
-  }
-
-  return newTasksArray;
-}
-
 async function sortTasksHandler(sortDirection) {
   const data = await getTasksFromDB(sortDirection);
-
+  console.log(data);
   return data;
 }
 
