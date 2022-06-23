@@ -140,32 +140,32 @@ class HtmlManager {
     this._setEditPropertiesOn(`input_${id}`);
   };
 
-  _createEditButton = (item) => {
+  _createEditButton = (id) => {
     const editButton = document.createElement("img");
-    editButton.id = `edit_button_${item.id}`;
+    editButton.id = `edit_button_${id}`;
     editButton.src = "./images/edit_icon.svg";
     editButton.classList.add("list-item-edit-button");
     editButton.addEventListener("click", () => {
-      this._editTaskText(item.id);
+      this._editTaskText(id);
     });
     return editButton;
   };
 
-  _saveTaskText = async (item) => {
-    const inputId = `input_${item.id}`;
+  _saveTaskText = async (id) => {
+    const inputId = `input_${id}`;
     const input = this._setEditPropertiesOff(inputId);
     const newText = input.value;
-    await this.itemClient.updateTaskText(item.id, newText);
-    this._displayEditButtonAndHideSaveButton(item.id);
+    await this.itemClient.updateTaskText(id, newText);
+    this._displayEditButtonAndHideSaveButton(id);
   };
-  _createSaveButton = (item) => {
+  _createSaveButton = (id) => {
     const saveButton = document.createElement("img");
-    saveButton.id = `save_button_${item.id}`;
+    saveButton.id = `save_button_${id}`;
     saveButton.src = "./images/save_icon.svg";
     saveButton.style.display = "none";
     saveButton.classList.add("list-item-edit-button");
     saveButton.addEventListener("click", () => {
-      this._saveTaskText(item);
+      this._saveTaskText(id);
     });
     return saveButton;
   };
@@ -184,8 +184,8 @@ class HtmlManager {
     this._setLiTag(li, id);
     this._checkIfStatusIsChecked(item, input);
 
-    const editButton = this._createEditButton(item);
-    const saveButton = this._createSaveButton(item);
+    const editButton = this._createEditButton(id);
+    const saveButton = this._createSaveButton(id);
     li.appendChild(editButton);
     li.appendChild(saveButton);
 
