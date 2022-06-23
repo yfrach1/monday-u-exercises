@@ -2,7 +2,6 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const api = require("./server/routes/itemRouter");
-//const api = require("./server/routes/api");
 const main = async () => {
   const app = express();
 
