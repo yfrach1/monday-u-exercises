@@ -1,6 +1,6 @@
 const { getTasksFromInput } = require("./input");
 const { capitalizeFirstLetter, combineTwoArrays } = require("../utils/utils");
-const { Items } = require("../db/models");
+const { Items, sequelize } = require("../db/models");
 const pokemonClient = require("../clients/pokemonClient");
 
 async function getAllTasksHandler() {
@@ -53,8 +53,10 @@ async function addNewTasksToDB(newTasks) {
     };
   });
 
+  const t = sequelize.transaction();
+
   try {
-    const newItems = await Items.bulkCreate(newTasksRow);
+    const newItems = await Items.bulkCreate(newTasksRow, { t });
     return newItems;
   } catch (error) {
     throw new Error("Write new data to DB Failed.");
@@ -166,7 +168,6 @@ async function deleteAllTaskHandler() {
 
 async function sortTasksHandler(sortDirection) {
   const data = await getTasksFromDB(sortDirection);
-  console.log(data);
   return data;
 }
 
