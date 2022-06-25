@@ -9,7 +9,7 @@ class ItemClient {
     try {
       const response = await axios.get("http://localhost:3042/items");
       return response.data;
-    } catch (e) {
+    } catch (error) {
       const status = error.response.status;
       const errorMessage = `Request failed with status code ${status}
 ${error.response.data}`;
