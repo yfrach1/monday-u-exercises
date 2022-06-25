@@ -53,10 +53,10 @@ async function addNewTasksToDB(newTasks) {
     };
   });
 
-  const t = sequelize.transaction();
+  //const t = sequelize.transaction();
 
   try {
-    const newItems = await Items.bulkCreate(newTasksRow, { t });
+    const newItems = await Items.bulkCreate(newTasksRow);
     return newItems;
   } catch (error) {
     throw new Error("Write new data to DB Failed.");
