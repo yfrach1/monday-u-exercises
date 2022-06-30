@@ -1,14 +1,14 @@
 {
-  "name": "hexdex_todo_cli",
+  "name": "monday-u-exercises",
   "version": "1.0.0",
-  "description": "Welcome to HexDex ToDo cli",
-  "main": "/src/ex3/main.js",
-  "type": "module",
+  "description": "Welcome to monday-u-exercises",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon src/ex4/dist/server.js",
+    "start": "node src/ex4/dist/server.js"
   },
   "bin": {
-    "hexdex_todo_cli": "src/ex3/main.js"
+    "main": "src/ex4/dist/index.html"
   },
   "repository": {
     "type": "git",
@@ -22,10 +22,19 @@
   "homepage": "https://github.com/yfrach1/monday-u-exercises#readme",
   "dependencies": {
     "asciify-image": "^0.1.8",
+    "axios": "^0.27.2",
     "chalk": "^5.0.1",
     "commander": "^9.3.0",
     "dotenv": "^16.0.1",
+    "express": "^4.18.1",
     "inquirer": "^8.2.4",
-    "node-fetch": "^3.2.4"
+    "mysql2": "^2.3.3",
+    "node-fetch": "^3.2.4",
+    "nodemon": "^2.0.16",
+    "sequelize": "^6.21.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.4.1"
   }
 }
