@@ -1,6 +1,6 @@
 const { getTasksFromInput } = require("./input");
 const { capitalizeFirstLetter, combineTwoArrays } = require("../utils/utils");
-const { Items, sequelize } = require("../db/models");
+const { Items } = require("../db/models");
 const pokemonClient = require("../clients/pokemonClient");
 
 async function getAllTasksHandler() {
@@ -52,8 +52,6 @@ async function addNewTasksToDB(newTasks) {
       status: false,
     };
   });
-
-  //const t = sequelize.transaction();
 
   try {
     const newItems = await Items.bulkCreate(newTasksRow);
@@ -122,35 +120,33 @@ async function newInputHandler(input) {
   let newPokemonTasks = [];
 
   const { pokemonsIdArr, normalTasks } = getTasksFromInput(input);
-
   if (pokemonsIdArr.length) {
     newPokemonTasks = await newPokemonsIdHandler(pokemonsIdArr);
   }
-
-  const newTasks = combineTwoArrays(newPokemonTasks, normalTasks);
+  let newTasks = combineTwoArrays(newPokemonTasks, normalTasks);
 
   const data = await getTasksFromDB();
-
   const tasksList = data.map((item) => item.itemName);
-
   const newTasksToAdd = newTasks.filter(
     (task) => !checkIfTaskExist(task, tasksList)
   );
 
   const newItems = await addNewTasksToDB(newTasksToAdd);
-  const dataAfterAddNewItems = [...data, ...newItems];
 
-  return dataAfterAddNewItems;
+  return newItems;
 }
 
 async function deleteTaskById(id) {
   try {
-    await Items.destroy({ where: { id } });
+    const result = await Items.destroy({ where: { id } });
+    if (result === 1) {
+      return id;
+    } else if (result === 0) {
+      return null;
+    }
   } catch (error) {
     throw new Error("Error while trying to delete an item");
   }
-  const data = await getTasksFromDB();
-  return data;
 }
 
 async function deleteTaskByIdHandler(id) {
@@ -173,25 +169,42 @@ async function sortTasksHandler(sortDirection) {
 
 flipTaskStatus = async (id) => {
   const item = await Items.findOne({ where: { id } });
-  const currentStatus = item.status;
-  return await item.update({
-    status: !currentStatus,
-    doneAt: new Date(),
-    updateAt: new Date(),
+  const newStatus = !item.status;
+  let doneAt = null;
+  if (newStatus) {
+    doneAt = new Date();
+  }
+  await item.update({
+    status: newStatus,
+    doneAt,
   });
+  return newStatus;
 };
 flipTaskStatusHandler = async (id) => {
-  const item = await flipTaskStatus(id);
-  await getTasksFromDB();
-  return item;
+  return await flipTaskStatus(id);
+};
+
+checkIfTaskExistInDB = async (text) => {
+  const item = await Items.findOne({ where: { itemName: text } });
+
+  if (item === null) {
+    return false;
+  } else {
+    return true;
+  }
 };
 
 updateItemTextHandler = async (id, text) => {
   const item = await Items.findOne({ where: { id } });
-  await item.update({
-    itemName: text,
-    updateAt: new Date(),
-  });
+  let result = capitalizeFirstLetter(text);
+  if (await checkIfTaskExistInDB(text)) {
+    result = item.itemName;
+  } else {
+    await item.update({
+      itemName: text,
+    });
+  }
+  return result;
 };
 module.exports = {
   getAllTasksHandler,
