@@ -1,4 +1,3 @@
-const { v4: uuidv4 } = require("uuid");
 function removeDuplicate(array) {
   const newArr = [...new Set(array)];
   return newArr;
@@ -50,17 +49,11 @@ function removeItemFromArray(array, item) {
   array.splice(myIndex, 1);
 }
 
-function generateUniqeId() {
-  return uuidv4();
-}
-
-function initActionResult(status, message, data) {
-  const result = {
-    status,
-    message,
-    data,
-  };
-  return result;
+function removeEmptyString(normalTasks) {
+  const array = normalTasks.filter((task) => {
+    return task.trim().length !== 0;
+  });
+  return array;
 }
 
 module.exports = {
@@ -74,6 +67,5 @@ module.exports = {
   isTextContainOnlyNumbersAndSpaces,
   combineTwoArrays,
   removeDuplicate,
-  generateUniqeId,
-  initActionResult,
+  removeEmptyString,
 };

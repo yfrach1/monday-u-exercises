@@ -1,6 +1,7 @@
 const {
   isTextContainOnlyNumbersAndSpaces,
   removeDuplicate,
+  removeEmptyString,
 } = require("../utils/utils");
 
 function getTasksFromInput(input) {
@@ -20,6 +21,7 @@ function getTasksFromInput(input) {
   }
   pokemonsIdArr = removeDuplicate(pokemonsIdArr);
   normalTasks = removeDuplicate(normalTasks);
+  normalTasks = removeEmptyString(normalTasks);
   const results = { pokemonsIdArr, normalTasks };
   return results;
 }
