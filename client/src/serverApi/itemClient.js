@@ -1,19 +1,13 @@
-// Create an ItemClient class here. This is what makes requests to your express server (your own custom API!)
-//import axios from "axios";
+import { initResult } from "../utils/utils";
 const axios = require("axios");
 const url = "http://localhost:8000/";
-
-const initResult = (result, data) => {
-  const res = {
-    result,
-    data,
-  };
-  return res;
-};
 
 export const getAllTasks = async () => {
   try {
     const response = await axios.get("http://localhost:8000/items");
+    if (response.data.length === 0) {
+      return initResult("empty", []);
+    }
     return initResult("success", response.data);
   } catch (error) {
     const status = error.response.status;
@@ -72,6 +66,9 @@ export const sortTasks = async (sortDirection) => {
   const sortPath = `${url}items/sort/${sortDirection}`;
   try {
     const response = await axios.get(sortPath);
+    if (!response.data.length) {
+      return initResult("empty", []);
+    }
     return initResult("success", response.data);
   } catch (error) {
     const status = error.response.status;

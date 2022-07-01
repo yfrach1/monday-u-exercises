@@ -1,14 +1,17 @@
 import React from "react";
-import Item from "./Item";
+import Item from "../Item/Item";
 import styles from "./ListItems.module.css";
 import PropTypes from "prop-types";
-
+import noop from "react-props-noop";
 const ListItem = ({
   data,
   removeIdFromDataHandler,
   onChangeValueUpdateData,
   setToastProps,
   checkIfTextAlreadyExist,
+  displayToast,
+  setShowToast,
+  killToast,
 }) => {
   return (
     <ul className={styles.list}>
@@ -21,8 +24,11 @@ const ListItem = ({
               removeIdFromDataHandler={removeIdFromDataHandler}
               status={item.status}
               onChangeValueUpdateDataHandler={onChangeValueUpdateData}
+              displayToast={displayToast}
+              setShowToast={setShowToast}
               setToastProps={setToastProps}
               checkIfTextAlreadyExist={checkIfTextAlreadyExist}
+              killToast={killToast}
             ></Item>
           </React.Fragment>
         );
@@ -36,13 +42,19 @@ ListItem.propTypes = {
   removeIdFromDataHandler: PropTypes.func,
   onChangeValueUpdateData: PropTypes.func,
   setToastProps: PropTypes.func,
+  displayToast: PropTypes.func,
+  setShowToast: PropTypes.func,
+  killToast: PropTypes.func,
 };
 
 ListItem.defaultProps = {
   data: [],
-  removeIdFromDataHandler: "none", /// need to check it with ayelet
-  onChangeValueUpdateData: "none",
-  setToastProps: "none",
+  removeIdFromDataHandler: noop,
+  onChangeValueUpdateData: noop,
+  setToastProps: noop,
+  displayToast: noop,
+  setShowToast: noop,
+  killToast: noop,
 };
 
 export default ListItem;

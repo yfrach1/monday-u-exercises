@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import Button from "./Button";
+import Button from "../Button/Button";
 import styles from "./UserInput.module.css";
 import PropTypes from "prop-types";
 

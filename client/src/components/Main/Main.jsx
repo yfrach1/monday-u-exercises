@@ -1,5 +1,5 @@
 import React from "react";
-import TodoApp from "./TodoApp";
+import TodoApp from "../TodoApp/TodoApp";
 import styles from "./Main.module.css";
 
 const Main = () => {

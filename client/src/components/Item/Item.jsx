@@ -4,12 +4,13 @@ import deleteIcon from "../../assets/images/delete_icon.svg";
 import editIcon from "../../assets/images/edit_icon.svg";
 import saveIcon from "../../assets/images/save_icon.svg";
 import PropTypes from "prop-types";
+import noop from "react-props-noop";
 import {
   deleteTaskById,
   flipStatus,
   updateTaskText,
 } from "../../serverApi/itemClient";
-import Icon from "./Icon";
+import Icon from "../Icon/Icon";
 
 const Item = ({
   itemName,
@@ -17,8 +18,10 @@ const Item = ({
   status,
   removeIdFromDataHandler,
   onChangeValueUpdateDataHandler,
-  setToastProps,
   checkIfTextAlreadyExist,
+  displayToast,
+  setShowToast,
+  killToast,
 }) => {
   const [showSaveButton, setShowSaveButton] = useState(false);
   const [showEditButton, setShowEditButton] = useState(true);
@@ -43,34 +46,17 @@ const Item = ({
     if (editTaskResult.result === "success") {
       if (isNewTextAlreadyExist) {
         if (textBeforeEdit !== textAfterEdit) {
-          setToastProps({
-            showToast: true,
-            toastType: "P",
-            message: "Task already exist in ToDO App",
-          });
+          displayToast("", "Task already exist in ToDO App");
         }
       } else {
         setTextAfterEdit(editTaskResult.data);
         onChangeValueUpdateDataHandler(id, "itemName", editTaskResult.data);
-        setToastProps({
-          showToast: true,
-          toastType: "POSITIVE",
-          message: "Task successfully edited & saved",
-        });
-        setTimeout(() => {
-          setToastProps({
-            showToast: false,
-            toastType: "",
-            message: "",
-          });
-        }, 5000);
+        displayToast("POSITIVE", "Task successfully edited & saved");
+
+        killToast();
       }
     } else {
-      setToastProps({
-        showToast: true,
-        toastType: "NEGATIVE",
-        message: editTaskResult.data,
-      });
+      displayToast("NEGATIVE", editTaskResult.data);
     }
 
     setIsEdit(false);
@@ -80,53 +66,27 @@ const Item = ({
     const deleteByIdResult = await deleteTaskById(id);
     if (deleteByIdResult.result === "success") {
       removeIdFromDataHandler(id);
-      setToastProps({
-        showToast: true,
-        toastType: "POSITIVE",
-        message: "Task successfully deleted",
-      });
-      setTimeout(() => {
-        setToastProps({
-          showToast: false,
-          toastType: "",
-          message: "",
-        });
-      }, 5000);
+      displayToast("POSITIVE", "Task successfully deleted");
+      killToast();
     } else {
-      setToastProps({
-        showToast: true,
-        toastType: "NEGATIVE",
-        message: deleteByIdResult.data,
-      });
+      displayToast("NEGATIVE", deleteByIdResult.data);
     }
-  }, [id, removeIdFromDataHandler, setToastProps]);
+  }, [id, removeIdFromDataHandler, setShowToast, displayToast]);
 
   const onClickstatusCheckBoxHandler = useCallback(async () => {
     const flipStatusResult = await flipStatus(id);
     if (flipStatusResult.result === "success") {
       onChangeValueUpdateDataHandler(id, "status", flipStatusResult.data);
-      setToastProps({
-        showToast: true,
-        toastType: "POSITIVE",
-        message: flipStatusResult.data
-          ? "Task status successfully checked"
-          : "Task status successfully unchecked",
-      });
-      setTimeout(() => {
-        setToastProps({
-          showToast: false,
-          toastType: "",
-          message: "",
-        });
-      }, 5000);
+      const messaeg = flipStatusResult.data
+        ? "Task status successfully checked"
+        : "Task status successfully unchecked";
+      displayToast("POSITIVE", messaeg);
+
+      killToast();
     } else {
-      setToastProps({
-        showToast: true,
-        toastType: "NEGATIVE",
-        message: flipStatusResult.data,
-      });
+      displayToast("NEGATIVE", flipStatusResult.data);
     }
-  }, [id, onChangeValueUpdateDataHandler, setToastProps]);
+  }, [id, onChangeValueUpdateDataHandler, setShowToast, displayToast]);
 
   const onChangeTaskTextHandler = (e) => {
     setTextAfterEdit(e.target.value);
@@ -151,7 +111,7 @@ const Item = ({
       />
       {showEditButton && !status && (
         <Icon
-          iconClassName={["listItemIcon"]}
+          iconClassName={"listItemIcon"}
           style={{ marginLeft: "auto" }}
           src={editIcon}
           onClickIconHandler={onClickEditItemHandler}
@@ -159,14 +119,14 @@ const Item = ({
       )}
       {showSaveButton && !status && (
         <Icon
-          iconClassName={["listItemIcon"]}
+          iconClassName={"listItemIcon"}
           style={{ marginLeft: "auto" }}
           src={saveIcon}
           onClickIconHandler={onClickSaveItemHandler}
         />
       )}
       <Icon
-        iconClassName={["listItemIcon"]}
+        iconClassName={"listItemIcon"}
         style={status ? { marginLeft: "auto" } : {}}
         src={deleteIcon}
         onClickIconHandler={onClickDeleteItemHandler}
@@ -177,18 +137,26 @@ const Item = ({
 
 Item.propTypes = {
   itemName: PropTypes.string,
+  id: PropTypes.number,
   status: PropTypes.bool,
   removeIdFromDataHandler: PropTypes.func,
   onChangeValueUpdateDataHandler: PropTypes.func,
-  setToastProps: PropTypes.func,
+  checkIfTextAlreadyExist: PropTypes.func,
+  displayToast: PropTypes.func,
+  setShowToast: PropTypes.func,
+  killToast: PropTypes.func,
 };
 
 Item.defaultProps = {
   itemName: "task text",
+  id: 0,
   status: false,
-  removeIdFromDataHandler: "none", /// need to check it with ayelet
-  onChangeValueUpdateDataHandler: "none",
-  setToastProps: NOOP,
+  removeIdFromDataHandler: noop,
+  onChangeValueUpdateDataHandler: noop,
+  checkIfTextAlreadyExist: noop,
+  displayToast: noop,
+  setShowToast: noop,
+  killToast: noop,
 };
 
 export default Item;

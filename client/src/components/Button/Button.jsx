@@ -1,5 +1,6 @@
 import styles from "./Button.module.css";
 import PropTypes from "prop-types";
+import noop from "react-props-noop";
 
 const Button = ({ onClickHandler, buttonClass, value }) => {
   return (
@@ -18,6 +19,6 @@ Button.propTypes = {
 Button.defaultProps = {
   buttonClass: "",
   value: "Button",
-  onClickHandler: "none", /// need to check it with ayelet
+  onClickHandler: noop,
 };
 export default Button;

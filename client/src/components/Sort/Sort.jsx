@@ -3,8 +3,9 @@ import styles from "./Sort.module.css";
 import upArrow from "../../assets/images/up_arrow.svg";
 import downArrow from "../../assets/images/down_arrow.svg";
 import PropTypes from "prop-types";
+import noop from "react-props-noop";
 import { sortTasks } from "../../serverApi/itemClient";
-const Sort = ({ onClickSortUpdateData, setToastProps }) => {
+const Sort = ({ onClickSortUpdateData, displayToast, killToast }) => {
   const [direction, setDirection] = useState("up");
   const onClickSortHandler = async () => {
     const sortResult = await sortTasks(direction);
@@ -16,25 +17,16 @@ const Sort = ({ onClickSortUpdateData, setToastProps }) => {
         setDirection("up");
       }
       onClickSortUpdateData(sortResult.data);
+      displayToast(
+        "POSITIVE",
+        `Your task now displayed in ${sortOrderType} order`
+      );
 
-      setToastProps({
-        showToast: true,
-        toastType: "POSITIVE",
-        message: `Your task now displayed in ${sortOrderType} order`,
-      });
-      setTimeout(() => {
-        setToastProps({
-          showToast: false,
-          toastType: "",
-          message: "",
-        });
-      }, 5000);
+      killToast();
+    } else if (sortResult.result === "failed") {
+      displayToast("NEGATIVE", sortResult.data);
     } else {
-      setToastProps({
-        showToast: true,
-        toastType: "NEGATIVE",
-        message: sortResult.data,
-      });
+      displayToast("", "You can't sort tasks when you don't have one");
     }
   };
   return (
@@ -57,12 +49,16 @@ const Sort = ({ onClickSortUpdateData, setToastProps }) => {
 
 Sort.propTypes = {
   onClickSortUpdateData: PropTypes.func,
-  setToastProps: PropTypes.func,
+  displayToast: PropTypes.func,
+  setShowToast: PropTypes.func,
+  killToast: PropTypes.func,
 };
 
 Sort.defaultProps = {
-  onClickSortUpdateData: "none", /// need to check it with ayelet
-  setToastProps: "none",
+  onClickSortUpdateData: noop,
+  displayToast: noop,
+  setShowToast: noop,
+  killToast: noop,
 };
 
 export default Sort;

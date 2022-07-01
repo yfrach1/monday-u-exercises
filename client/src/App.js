@@ -1,5 +1,5 @@
 import styles from "./App.module.css";
-import Main from "./components/todos/Main";
+import Main from "./components/Main/Main";
 import React from "react";
 function App() {
   return (
