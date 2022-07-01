@@ -56,13 +56,13 @@ const TodoApp = () => {
           toastType: "POSITIVE",
           message: "Successfully add new items",
         });
-        // setTimeout(() => {
-        //   setToastProps({
-        //     showToast: false,
-        //     toastType: "",
-        //     message: "",
-        //   });
-        // }, 5000);
+        setTimeout(() => {
+          setToastProps({
+            showToast: false,
+            toastType: "",
+            message: "",
+          });
+        }, 5000);
       } else if (addNewItemsResult.data.length === 0) {
         setToastProps({
           showToast: true,
