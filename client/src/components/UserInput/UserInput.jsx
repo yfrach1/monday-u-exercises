@@ -1,17 +1,19 @@
 import { useRef } from "react";
-import Button from "../Button/Button";
+import AddButton from "../Buttons/AddButton";
 import styles from "./UserInput.module.css";
 import PropTypes from "prop-types";
 
-const UserInput = ({ onClickAddButtonHandler }) => {
+const UserInput = ({ newInputAction }) => {
   const userInputRef = useRef();
-  const onClickButtun = () => {
-    onClickAddButtonHandler(userInputRef);
+  const onClickAddButtun = () => {
+    const userInput = userInputRef.current.value;
+    userInputRef.current.value = "";
+    newInputAction(userInput);
   };
 
   const handleKeypress = (e) => {
     if (e.key === "Enter") {
-      onClickAddButtonHandler(userInputRef);
+      onClickAddButtun();
     }
   };
   return (
@@ -24,21 +26,17 @@ const UserInput = ({ onClickAddButtonHandler }) => {
         onKeyPress={handleKeypress}
       />
 
-      <Button
-        onClickHandler={onClickButtun}
-        buttonClass={"addButton"}
-        value={"+"}
-      />
+      <AddButton onClickHandler={onClickAddButtun} />
     </div>
   );
 };
 
 UserInput.propTypes = {
-  onClickAddButtonHandler: PropTypes.func,
+  newInputAction: PropTypes.func,
 };
 
 UserInput.defaultProps = {
-  onClickAddButtonHandler: "none", /// need to check it with ayelet
+  newInputAction: () => {},
 };
 
 export default UserInput;

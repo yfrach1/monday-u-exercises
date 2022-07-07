@@ -1,5 +1,9 @@
 const { getTasksFromInput } = require("./input");
-const { capitalizeFirstLetter, combineTwoArrays } = require("../utils/utils");
+const {
+  capitalizeFirstLetter,
+  combineTwoArrays,
+  removeExtraSpaceFromTask,
+} = require("../utils/utils");
 const { Items } = require("../db/models");
 const pokemonClient = require("../clients/pokemonClient");
 
@@ -47,11 +51,14 @@ async function getTasksFromDB(direction = null) {
 
 async function addNewTasksToDB(newTasks) {
   const newTasksRow = newTasks.map((task) => {
+    const itemName = capitalizeFirstLetter(removeExtraSpaceFromTask(task));
     return {
-      itemName: capitalizeFirstLetter(task),
+      itemName,
       status: false,
     };
   });
+
+  console.log("newTasksRow: ", newTasksRow);
 
   try {
     const newItems = await Items.bulkCreate(newTasksRow);
@@ -167,7 +174,7 @@ async function sortTasksHandler(sortDirection) {
   return data;
 }
 
-flipTaskStatus = async (id) => {
+toggleStatus = async (id) => {
   const item = await Items.findOne({ where: { id } });
   const newStatus = !item.status;
   let doneAt = null;
@@ -178,10 +185,10 @@ flipTaskStatus = async (id) => {
     status: newStatus,
     doneAt,
   });
-  return newStatus;
+  return { newValue: newStatus, id, field: "status" };
 };
-flipTaskStatusHandler = async (id) => {
-  return await flipTaskStatus(id);
+toggleStatusHandler = async (id) => {
+  return await toggleStatus(id);
 };
 
 checkIfTaskExistInDB = async (text) => {
@@ -196,12 +203,20 @@ checkIfTaskExistInDB = async (text) => {
 
 updateItemTextHandler = async (id, text) => {
   const item = await Items.findOne({ where: { id } });
-  let result = capitalizeFirstLetter(text);
+  let result = {
+    updateResult: "success",
+    newValue: capitalizeFirstLetter(text),
+    id,
+    field: "itemName",
+  };
   if (await checkIfTaskExistInDB(text)) {
-    result = item.itemName;
+    result = {
+      updateResult: "already have",
+      newValue: item.itemName,
+    };
   } else {
     await item.update({
-      itemName: text,
+      itemName: capitalizeFirstLetter(text),
     });
   }
   return result;
@@ -212,6 +227,6 @@ module.exports = {
   deleteTaskByIdHandler,
   deleteAllTaskHandler,
   sortTasksHandler,
-  flipTaskStatusHandler,
+  toggleStatusHandler,
   updateItemTextHandler,
 };

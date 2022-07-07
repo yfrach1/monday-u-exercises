@@ -1,18 +1,15 @@
 import { Toast } from "monday-ui-react-core";
+import styles from "./MyToast.module.css";
 import PropTypes from "prop-types";
-import noop from "react-props-noop";
-const MyToast = ({ showToast, property, setShowToast }) => {
+const MyToast = ({ showToast, property, hideToastAction }) => {
   const { toastType, message } = property;
 
-  const setToastPropsHandler = () => {
-    setShowToast(false);
-  };
   return (
     <Toast
       open={showToast}
       type={Toast.types[toastType]}
-      className="monday-storybook-toast_wrapper"
-      onClose={setToastPropsHandler}
+      className={`monday-storybook-toast_wrapper ${styles.mondayStyleToast}`}
+      onClose={hideToastAction}
     >
       {message}
     </Toast>
@@ -28,7 +25,7 @@ MyToast.propTypes = {
 MyToast.defaultProps = {
   showToast: false,
   property: { toastType: "", message: "" },
-  setShowToast: noop,
+  setShowToast: () => {},
 };
 
 export default MyToast;

@@ -49,10 +49,10 @@ async function sortTasksHandler(req, res) {
   }
 }
 
-async function flipStatusHandler(req, res) {
+async function toggleStatusHandler(req, res) {
   try {
     const id = req.params.id;
-    const result = await itemManager.flipTaskStatusHandler(id);
+    const result = await itemManager.toggleStatusHandler(id);
 
     return res.status(200).send(result);
   } catch (error) {
@@ -76,6 +76,6 @@ module.exports = {
   deleteTaskHandler,
   deleteAllTaskHandler,
   sortTasksHandler,
-  flipStatusHandler,
+  toggleStatusHandler,
   updateTaskTextHandler,
 };
