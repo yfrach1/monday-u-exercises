@@ -6,14 +6,12 @@ const {
   getAllTasksHandler,
   deleteTaskHandler,
   deleteAllTaskHandler,
-  sortTasksHandler,
   toggleStatusHandler,
   updateTaskTextHandler,
 } = require("../controllers/itemController");
 const itemRouter = express.Router();
 
 itemRouter.get("/items", getAllTasksHandler);
-itemRouter.get("/items/sort/:direction", sortTasksHandler);
 itemRouter.delete("/item/:id", deleteTaskHandler);
 itemRouter.delete("/items", deleteAllTaskHandler);
 itemRouter.post("/item", addNewInputHandler);

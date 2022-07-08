@@ -22,27 +22,9 @@ function checkIfTaskExist(newTask, tasksList) {
   return result;
 }
 
-getSortOrder = (direction) => {
-  let order;
-  if (direction === "down") {
-    order = {
-      order: [["itemName", "DESC"]],
-    };
-  } else {
-    order = {
-      order: [["itemName", "ASC"]],
-    };
-  }
-  return order;
-};
-
-async function getTasksFromDB(direction = null) {
-  let order = {};
-  if (direction !== null) {
-    order = getSortOrder(direction);
-  }
+async function getTasksFromDB() {
   try {
-    const allItems = await Items.findAll(order);
+    const allItems = await Items.findAll();
     return allItems;
   } catch (error) {
     throw new Error("Read data from DB Failed.");
@@ -167,11 +149,6 @@ async function deleteAllTaskHandler() {
   await deleteAllTasks();
 }
 
-async function sortTasksHandler(sortDirection) {
-  const data = await getTasksFromDB(sortDirection);
-  return data;
-}
-
 toggleStatus = async (id) => {
   const item = await Items.findOne({ where: { id } });
   const newStatus = !item.status;
@@ -224,7 +201,6 @@ module.exports = {
   newInputHandler,
   deleteTaskByIdHandler,
   deleteAllTaskHandler,
-  sortTasksHandler,
   toggleStatusHandler,
   updateItemTextHandler,
 };
