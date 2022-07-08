@@ -1,10 +1,6 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {
-  getItems,
-  selectResult,
-} from "../../app/selectors/items-entities-selectors";
-import { getItemsFilter } from "../../app/selectors/items-view-selectors";
+import { getItems } from "../../app/selectors/items-entities-selectors";
 import ListItems from "./ListItems";
 
 const mapStateToProps = (state, ownProps) => {

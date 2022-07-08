@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import SortConnector from "../Sort/Sort-connector";
+import SortConnector from "../sort/Sort-connector";
 import { Dropdown, Search } from "monday-ui-react-core";
 import styles from "./DisplayOption.module.css";
 
@@ -38,7 +38,9 @@ const DisplayOption = ({ setFilterAction, setSearchKeyAction }) => {
               placeholder="Search items by name"
               style={{ width: "70px" }}
               size={Search.sizes.SMALL}
-              onChange={(e) => setSearchKeyAction(e)}
+              onChange={(e) => {
+                setSearchKeyAction(e);
+              }}
             />
           </div>
         </div>

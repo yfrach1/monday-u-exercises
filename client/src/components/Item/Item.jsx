@@ -1,11 +1,10 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState } from "react";
 import styles from "./Item.module.css";
 import deleteIcon from "../../assets/images/delete_icon.svg";
 import editIcon from "../../assets/images/edit_icon.svg";
 import saveIcon from "../../assets/images/save_icon.svg";
 
 import PropTypes from "prop-types";
-import noop from "react-props-noop";
 import Icon from "../Icon/Icon";
 
 const Item = ({
@@ -95,32 +94,17 @@ const Item = ({
 };
 
 Item.propTypes = {
-  // item: PropTypes.object,
-  // deleteItemByIdAction,
-  // toggleStatusAction,
-  // updateItemNameAction,
-
-  itemName: PropTypes.string,
-  id: PropTypes.number,
-  status: PropTypes.bool,
-  removeIdFromDataHandler: PropTypes.func,
-  onChangeValueUpdateDataHandler: PropTypes.func,
-  checkIfTextAlreadyExist: PropTypes.func,
-  displayToast: PropTypes.func,
-  setShowToast: PropTypes.func,
-  killToast: PropTypes.func,
+  item: PropTypes.object,
+  deleteItemByIdAction: PropTypes.func,
+  toggleStatusAction: PropTypes.func,
+  updateItemNameAction: PropTypes.func,
 };
 
 Item.defaultProps = {
-  itemName: "task text",
-  id: 0,
-  status: false,
-  removeIdFromDataHandler: noop,
-  onChangeValueUpdateDataHandler: noop,
-  checkIfTextAlreadyExist: noop,
-  displayToast: noop,
-  setShowToast: noop,
-  killToast: noop,
+  item: { id: "id", itemName: "itemName", status: "status" },
+  deleteItemByIdAction: () => {},
+  toggleStatusAction: () => {},
+  updateItemNameAction: () => {},
 };
 
 export default Item;

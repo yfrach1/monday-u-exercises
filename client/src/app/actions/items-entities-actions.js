@@ -50,10 +50,6 @@ const updateItem = (itemData) => {
   };
 };
 
-// const setError = () => {
-//   return actionsTypes.SET_ERROR;
-// };
-
 const setLoaderOff = async (dispatch, action, time) => {
   setTimeout(() => {
     dispatch(action());
@@ -111,8 +107,8 @@ export const deleteAllItemsAction = (id) => {
 export const newInputAction = (input) => {
   return async (dispatch) => {
     if (checkIfInputIsNotValid(input)) {
-      dispatch(showToast());
       dispatch(setToast("NEGATIVE", "Input is not valid"));
+      dispatch(showToast());
     } else {
       dispatch(showLoader());
       const addNewInputResult = await handleNewItem(input);

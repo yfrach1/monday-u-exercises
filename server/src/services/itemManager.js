@@ -58,8 +58,6 @@ async function addNewTasksToDB(newTasks) {
     };
   });
 
-  console.log("newTasksRow: ", newTasksRow);
-
   try {
     const newItems = await Items.bulkCreate(newTasksRow);
     return newItems;

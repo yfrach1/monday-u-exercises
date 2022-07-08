@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const AddButton = ({ onClickHandler }) => {
   return (
-    <button className={styles.addButton} onClick={() => onClickHandler()}>
+    <button className={styles.addButton} onClick={onClickHandler}>
       +
     </button>
   );

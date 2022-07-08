@@ -8,7 +8,6 @@ import {
 import Item from "./Item";
 
 const mapStateToProps = (state, ownProps) => {
-  // const items = getItems(state);
   return {};
 };
 

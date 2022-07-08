@@ -1,6 +1,5 @@
 import styles from "./Icon.module.css";
 import PropTypes from "prop-types";
-import noop from "react-props-noop";
 const Icon = ({ iconClassName, style, src, onClickIconHandler }) => {
   return (
     <img
@@ -24,7 +23,7 @@ Icon.defaultProps = {
   iconClassName: "",
   style: {},
   src: "",
-  onClickIconHandler: noop,
+  onClickIconHandler: () => {},
 };
 
 export default Icon;

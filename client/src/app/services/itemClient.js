@@ -3,12 +3,6 @@ const axios = require("axios");
 const url = "http://localhost:8000/";
 
 export const getAllTasks = async () => {
-  // const setLoaderOff = () => {
-  //   setTimeout(() => {
-  //     console.log("time done");
-  //   }, 5000);
-  // };
-  // setLoaderOff();
   try {
     const response = await axios.get(`${url}items`);
     if (response.data.length === 0) {
@@ -26,6 +20,13 @@ export const handleNewItem = async (userInput) => {
   };
   try {
     const response = await axios.post(`${url}item`, newItem);
+    if (response.data.length === 0) {
+      return initResult(
+        "already have",
+        "Already have this task, try to add new task",
+        []
+      );
+    }
     return initResult("success", "Successfully add new items", response.data);
   } catch (error) {
     return initResult("failed", "Something failed while add new items", null);
