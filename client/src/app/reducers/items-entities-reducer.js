@@ -2,8 +2,7 @@ import actionTypes from "../actions/constants";
 
 const initialState = {
   items: {},
-  allItemsAmount: 0,
-  viewItemsAmount: 0,
+  itemsAmount: 0,
 };
 
 const itemsEntitiesReducer = (state = initialState, action) => {
