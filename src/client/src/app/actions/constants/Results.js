@@ -1,0 +1,8 @@
+const RESULTS = {
+  SUCCESS: "SUCCESS",
+  FAILED: "FAILED",
+  ALREADY_HAVE: "ALREADY_HAVE",
+  EMPTY: "EMPTY",
+};
+
+export default RESULTS;
