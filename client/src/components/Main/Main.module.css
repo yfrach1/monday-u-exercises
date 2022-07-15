@@ -15,5 +15,40 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+}
+
+#option {
+  transition: all 0.3s;
+  margin: 0 20px;
+  cursor: pointer;
+  text-decoration: none !important;
+}
+#option:hover {
+  transition: all 0.3s;
+  margin: 0 20px;
+  color: white;
+  transform: scale(1.2);
+}
+
+.navagationBar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  color: white;
+  position: absolute;
+  top: 0;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 20px 0;
+  text-align: center;
+  background: linear-gradient(
+    to bottom right,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  border-radius: 5px;
 }

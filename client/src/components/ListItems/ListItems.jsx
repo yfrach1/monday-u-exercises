@@ -1,36 +1,22 @@
 import React from "react";
-import Item from "../Item/Item";
 import styles from "./ListItems.module.css";
 import PropTypes from "prop-types";
-import noop from "react-props-noop";
-const ListItem = ({
-  data,
-  removeIdFromDataHandler,
-  onChangeValueUpdateData,
-  setToastProps,
-  checkIfTextAlreadyExist,
-  displayToast,
-  setShowToast,
-  killToast,
-}) => {
+import ItemConnector from "../item/Item-connector";
+const ListItem = ({ items }) => {
+  const checkIfTextAlreadyExist = (taskText) => {
+    const taskList = items.map((item) => item.itemName);
+    const result = taskList.includes(taskText) ? true : false;
+    return result;
+  };
   return (
     <ul className={styles.list}>
-      {data.map((item) => {
+      {items.map((item) => {
         return (
-          <React.Fragment key={item.id}>
-            <Item
-              itemName={item.itemName}
-              id={item.id}
-              removeIdFromDataHandler={removeIdFromDataHandler}
-              status={item.status}
-              onChangeValueUpdateDataHandler={onChangeValueUpdateData}
-              displayToast={displayToast}
-              setShowToast={setShowToast}
-              setToastProps={setToastProps}
-              checkIfTextAlreadyExist={checkIfTextAlreadyExist}
-              killToast={killToast}
-            ></Item>
-          </React.Fragment>
+          <ItemConnector
+            key={item.id}
+            item={item}
+            checkIfTextAlreadyExist={checkIfTextAlreadyExist}
+          />
         );
       })}
     </ul>
@@ -38,23 +24,11 @@ const ListItem = ({
 };
 
 ListItem.propTypes = {
-  data: PropTypes.array,
-  removeIdFromDataHandler: PropTypes.func,
-  onChangeValueUpdateData: PropTypes.func,
-  setToastProps: PropTypes.func,
-  displayToast: PropTypes.func,
-  setShowToast: PropTypes.func,
-  killToast: PropTypes.func,
+  items: PropTypes.array,
 };
 
 ListItem.defaultProps = {
-  data: [],
-  removeIdFromDataHandler: noop,
-  onChangeValueUpdateData: noop,
-  setToastProps: noop,
-  displayToast: noop,
-  setShowToast: noop,
-  killToast: noop,
+  items: [],
 };
 
 export default ListItem;

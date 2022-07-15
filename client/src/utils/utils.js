@@ -1,6 +1,7 @@
-export const initResult = (result, data) => {
+export const initResult = (result, message, data) => {
   const res = {
     result,
+    message,
     data,
   };
   return res;
@@ -13,3 +14,23 @@ export const checkIfInputIsNotValid = (input) => {
     return false;
   }
 };
+
+export const compareItemName = (a, b) => {
+  if (a.itemName < b.itemName) {
+    return -1;
+  }
+  if (a.itemName > b.itemName) {
+    return 1;
+  }
+  return 0;
+};
+
+//  function compareItemName(a, b) {
+//           if (a.itemName < b.itemName) {
+//             return -1;
+//           }
+//           if (a.itemName > b.itemName) {
+//             return 1;
+//           }
+//           return 0;
+//         }

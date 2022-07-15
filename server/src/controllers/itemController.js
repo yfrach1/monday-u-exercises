@@ -39,20 +39,10 @@ async function deleteAllTaskHandler(req, res) {
   }
 }
 
-async function sortTasksHandler(req, res) {
-  const sortDirection = req.params.direction;
-  try {
-    const result = await itemManager.sortTasksHandler(sortDirection);
-    return res.status(200).send(result);
-  } catch (error) {
-    return res.status(500).send(error.message);
-  }
-}
-
-async function flipStatusHandler(req, res) {
+async function toggleStatusHandler(req, res) {
   try {
     const id = req.params.id;
-    const result = await itemManager.flipTaskStatusHandler(id);
+    const result = await itemManager.toggleStatusHandler(id);
 
     return res.status(200).send(result);
   } catch (error) {
@@ -75,7 +65,6 @@ module.exports = {
   getAllTasksHandler,
   deleteTaskHandler,
   deleteAllTaskHandler,
-  sortTasksHandler,
-  flipStatusHandler,
+  toggleStatusHandler,
   updateTaskTextHandler,
 };

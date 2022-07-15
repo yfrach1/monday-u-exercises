@@ -10,8 +10,7 @@ const main = async () => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use("/", api);
-app.use(express.static(path.resolve(__dirname, "../client/build")));
-
+  app.use(express.static(path.resolve(__dirname, "../client/build")));
   const port = process.env.PORT || "8000";
   app.listen(port, function () {
     console.log("Running on " + port);

@@ -1,5 +1,9 @@
 const { getTasksFromInput } = require("./input");
-const { capitalizeFirstLetter, combineTwoArrays } = require("../utils/utils");
+const {
+  capitalizeFirstLetter,
+  combineTwoArrays,
+  removeExtraSpaceFromTask,
+} = require("../utils/utils");
 const { Items } = require("../db/models");
 const pokemonClient = require("../clients/pokemonClient");
 
@@ -18,27 +22,9 @@ function checkIfTaskExist(newTask, tasksList) {
   return result;
 }
 
-getSortOrder = (direction) => {
-  let order;
-  if (direction === "down") {
-    order = {
-      order: [["itemName", "DESC"]],
-    };
-  } else {
-    order = {
-      order: [["itemName", "ASC"]],
-    };
-  }
-  return order;
-};
-
-async function getTasksFromDB(direction = null) {
-  let order = {};
-  if (direction !== null) {
-    order = getSortOrder(direction);
-  }
+async function getTasksFromDB() {
   try {
-    const allItems = await Items.findAll(order);
+    const allItems = await Items.findAll();
     return allItems;
   } catch (error) {
     throw new Error("Read data from DB Failed.");
@@ -47,8 +33,9 @@ async function getTasksFromDB(direction = null) {
 
 async function addNewTasksToDB(newTasks) {
   const newTasksRow = newTasks.map((task) => {
+    const itemName = capitalizeFirstLetter(removeExtraSpaceFromTask(task));
     return {
-      itemName: capitalizeFirstLetter(task),
+      itemName,
       status: false,
     };
   });
@@ -162,12 +149,7 @@ async function deleteAllTaskHandler() {
   await deleteAllTasks();
 }
 
-async function sortTasksHandler(sortDirection) {
-  const data = await getTasksFromDB(sortDirection);
-  return data;
-}
-
-flipTaskStatus = async (id) => {
+toggleStatus = async (id) => {
   const item = await Items.findOne({ where: { id } });
   const newStatus = !item.status;
   let doneAt = null;
@@ -178,10 +160,10 @@ flipTaskStatus = async (id) => {
     status: newStatus,
     doneAt,
   });
-  return newStatus;
+  return { newValue: newStatus, id, field: "status" };
 };
-flipTaskStatusHandler = async (id) => {
-  return await flipTaskStatus(id);
+toggleStatusHandler = async (id) => {
+  return await toggleStatus(id);
 };
 
 checkIfTaskExistInDB = async (text) => {
@@ -196,12 +178,20 @@ checkIfTaskExistInDB = async (text) => {
 
 updateItemTextHandler = async (id, text) => {
   const item = await Items.findOne({ where: { id } });
-  let result = capitalizeFirstLetter(text);
+  let result = {
+    updateResult: "success",
+    newValue: capitalizeFirstLetter(text),
+    id,
+    field: "itemName",
+  };
   if (await checkIfTaskExistInDB(text)) {
-    result = item.itemName;
+    result = {
+      updateResult: "already have",
+      newValue: item.itemName,
+    };
   } else {
     await item.update({
-      itemName: text,
+      itemName: capitalizeFirstLetter(text),
     });
   }
   return result;
@@ -211,7 +201,6 @@ module.exports = {
   newInputHandler,
   deleteTaskByIdHandler,
   deleteAllTaskHandler,
-  sortTasksHandler,
-  flipTaskStatusHandler,
+  toggleStatusHandler,
   updateItemTextHandler,
 };

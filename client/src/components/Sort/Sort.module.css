@@ -1,13 +1,24 @@
 .listSortControl {
-  width: 90%;
-  margin: 0 auto;
+  width: 20%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   margin-top: 20px;
-  margin-right: 5%;
+  margin-right: 0;
+  padding-bottom: 10px;
 }
-.listSortButton:hover {
+
+.sortCheckBox {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.sortIcon {
+  height: 20px;
+  width: 20px;
+}
+
+.sortIcon:hover {
   cursor: pointer;
   background-color: #f0f0f5;
   transition: background-color 0.2s ease-in-out;
