@@ -1,17 +1,18 @@
 import { useMemo } from "react";
-import SortConnector from "../sort/Sort-connector";
+import SortConnector from "../Sort/Sort-connector";
 import { Dropdown, Search } from "monday-ui-react-core";
+import filterTypes from "../../app/constant/Filter";
 import styles from "./DisplayOption.module.css";
 
 const DisplayOption = ({ setFilterAction, setSearchKeyAction }) => {
   const options = useMemo(
     () => [
       {
-        value: "done",
+        value: filterTypes.DONE,
         label: "Done",
       },
       {
-        value: "pending",
+        value: filterTypes.PENDING,
         label: "Pending",
       },
     ],

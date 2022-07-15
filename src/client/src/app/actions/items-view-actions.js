@@ -1,8 +1,8 @@
 import actionTypes from "./constants";
 import sortType from "../actions/constants/SortType";
 
-export const hideLoader = () => ({
-  type: actionTypes.HIDE_LOADER,
+export const hideToast = () => ({
+  type: actionTypes.HIDE_TOAST,
 });
 
 const setFilter = (filter) => ({
@@ -91,18 +91,6 @@ export const setToast = (toastType, message) => {
       message,
     },
   };
-};
-
-export const showLoaderAction = () => {
-  return (dispatch) => dispatch(showLoader());
-};
-
-export const hideLoaderAction = () => {
-  return (dispatch) => dispatch(hideLoader());
-};
-
-export const showToastAction = () => {
-  return (dispatch) => dispatch(showToast());
 };
 
 export const hideToastAction = () => {

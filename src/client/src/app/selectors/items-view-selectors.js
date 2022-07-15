@@ -1,5 +1,5 @@
 import sortType from "../actions/constants/SortType";
-import filterType from "../actions/constants/Filter";
+import filterType from "../constant/Filter";
 import { getItemsObj } from "./items-entities-selectors";
 import { createSelector } from "@reduxjs/toolkit";
 const getItemsView = (state) => state.itemsView;
