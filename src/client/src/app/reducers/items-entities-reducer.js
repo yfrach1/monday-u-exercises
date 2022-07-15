@@ -36,6 +36,7 @@ const itemsEntitiesReducer = (state = initialState, action) => {
     }
     case actionTypes.UPDATE_ITEM: {
       const { newValue, id, field } = action.itemData;
+
       const newItems = { ...state.items };
       newItems[id][field] = newValue;
       return {

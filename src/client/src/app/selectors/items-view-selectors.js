@@ -2,7 +2,6 @@ import sortType from "../actions/constants/SortType";
 import filterType from "../actions/constants/Filter";
 import { getItemsObj } from "./items-entities-selectors";
 import { createSelector } from "@reduxjs/toolkit";
-import { compareItemName } from "../../utils/utils";
 const getItemsView = (state) => state.itemsView;
 
 export const getShowLoader = (state) => getItemsView(state).showLoader;
@@ -11,6 +10,17 @@ export const getToastParam = (state) => getItemsView(state).toastParam;
 export const getItemsFilter = (state) => getItemsView(state).itemsFilter;
 export const getSortType = (state) => getItemsView(state).sortType;
 export const getSearchKey = (state) => getItemsView(state).searchKey;
+export const getInputValue = (state) => getItemsView(state).inputValue;
+
+const compareItemName = (a, b) => {
+  if (a.itemName < b.itemName) {
+    return -1;
+  }
+  if (a.itemName > b.itemName) {
+    return 1;
+  }
+  return 0;
+};
 
 export const getFilteredItems = createSelector(
   [getItemsObj, getItemsFilter, getSortType, getSearchKey],
@@ -25,6 +35,9 @@ export const getFilteredItems = createSelector(
         itemsToBeView = itemsToBeView.filter((item) => !item.status);
         break;
       }
+      default: {
+        break;
+      }
     }
 
     switch (sort) {
@@ -34,6 +47,9 @@ export const getFilteredItems = createSelector(
       }
       case sortType.ASC: {
         itemsToBeView.sort(compareItemName).reverse();
+        break;
+      }
+      default: {
         break;
       }
     }

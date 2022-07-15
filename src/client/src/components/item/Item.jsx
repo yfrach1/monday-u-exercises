@@ -14,13 +14,13 @@ const Item = ({
   deleteItemByIdAction,
   toggleStatusAction,
   updateItemNameAction,
+  checkIfTextAlreadyExist,
 }) => {
   const [showSaveButton, setShowSaveButton] = useState(false);
   const [showEditButton, setShowEditButton] = useState(true);
   const [textReadOnly, setTextReadOnly] = useState(true);
   const [isEdit, setIsEdit] = useState(false);
   const [textAfterEdit, setTextAfterEdit] = useState(itemName);
-
   const onClickEditItemHandler = () => {
     setShowSaveButton(true);
     setShowEditButton(false);
@@ -33,7 +33,7 @@ const Item = ({
     setShowEditButton(true);
     setTextReadOnly(true);
 
-    if (itemName !== textAfterEdit) {
+    if (itemName !== textAfterEdit || !checkIfTextAlreadyExist(textAfterEdit)) {
       await updateItemNameAction(id, textAfterEdit, itemName);
     }
     setIsEdit(false);
@@ -41,11 +41,11 @@ const Item = ({
 
   const onClickDeleteItemHandler = useCallback(async () => {
     await deleteItemByIdAction(id);
-  }, [id]);
+  }, [id, deleteItemByIdAction]);
 
   const onClickstatusCheckBoxHandler = useCallback(async () => {
     await toggleStatusAction(id);
-  }, [id]);
+  }, [id, toggleStatusAction]);
 
   const onChangeTaskTextHandler = (e) => {
     setTextAfterEdit(e.target.value);
