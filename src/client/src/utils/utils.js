@@ -5,3 +5,8 @@ export const checkIfInputIsNotValid = (input) => {
     return false;
   }
 };
+
+export const capitalizeFirstLetter = (text) => {
+  const capitalized = text.charAt(0).toUpperCase() + text.slice(1);
+  return capitalized;
+};

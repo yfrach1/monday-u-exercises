@@ -3,7 +3,6 @@ import itemsEntitiesReducer from "../items-entities-reducer";
 
 const initialState = {
   items: {},
-  itemsAmount: 0,
 };
 
 describe("items Entities Reducer ", () => {
@@ -23,7 +22,7 @@ describe("items Entities Reducer ", () => {
     ];
     const action = { type: "SET_DATA", data };
     newStateAfterSetData = itemsEntitiesReducer(prevState, action);
-    expect(newStateAfterSetData.itemsAmount).toEqual(3);
+    expect(Object.keys(newStateAfterSetData.items).length).toEqual(3);
   });
 
   test("return new state without item with id:677 ", () => {
@@ -36,7 +35,7 @@ describe("items Entities Reducer ", () => {
   });
 
   test("return new empty state after delete all items ", () => {
-    const action = { type: "REMOVE_ITEMS" };
+    const action = { type: "CLEAR_ITEMS" };
     const newStateAfterDeleteAll = itemsEntitiesReducer(
       newStateAfterSetData,
       action

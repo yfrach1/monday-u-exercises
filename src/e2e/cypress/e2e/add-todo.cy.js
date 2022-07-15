@@ -1,20 +1,12 @@
 describe("Add Todo Action", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000");
+    cy.visit("http://localhost:3001");
   });
 
   it("Should add a new todo", () => {
     // TODO: fill this test
-    cy.get("#user_input").type("enter some data{enter}");
-    cy.contains("ul", "Enter some data");
-    // cy.get("#list_items")
-    //   .findByText(/enter some data/i)
-    //   .should("exist");
-    // cy.wait(2000);
-    // const inputTextBox = cy
-    //   .find("#user_input")
-    //   .type("enter some data")
-    //   .type("{ enter }");
-    // console.log();
+    cy.get("#user_input").type("AAA{enter}");
+    // const x = cy.get("ul li").last();
+    // console.log(x.find("input").should("have.value", "AAA"));
   });
 });

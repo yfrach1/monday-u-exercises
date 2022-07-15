@@ -1,19 +1,8 @@
 import actionTypes from "./constants";
 import sortType from "../actions/constants/SortType";
-export const showLoader = () => ({
-  type: actionTypes.SHOW_LOADER,
-});
 
 export const hideLoader = () => ({
   type: actionTypes.HIDE_LOADER,
-});
-
-export const showToast = () => ({
-  type: actionTypes.SHOW_TOAST,
-});
-
-export const hideToast = () => ({
-  type: actionTypes.HIDE_TOAST,
 });
 
 const setFilter = (filter) => ({

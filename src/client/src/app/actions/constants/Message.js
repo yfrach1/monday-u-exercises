@@ -14,6 +14,7 @@ const MESSAGE = {
   TOGGLE_STATUS_FAILED: "Something failed while toggle item status",
   EDIT_ITEM_SUCCESSED: "Successfully edit & save item",
   EDIT_ITEM_FAILED: "Something failed while updating item text",
+  INPUT_NOT_VALID: "Input is not valid",
 };
 
 export default MESSAGE;

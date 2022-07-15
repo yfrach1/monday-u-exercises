@@ -24,7 +24,6 @@ const itemsEntitiesReducer = (state = initialState, action) => {
     case actionTypes.CLEAR_ITEMS: {
       return {
         items: {},
-        itemsAmount: 0,
       };
     }
     case actionTypes.ADD_ITEMS: {

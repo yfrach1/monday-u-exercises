@@ -137,34 +137,10 @@ const itemsViewReducer = (state = initialState, action) => {
       };
     }
 
-    case actionTypes.SHOW_LOADER: {
-      return {
-        ...state,
-        showLoader: true,
-      };
-    }
-    case actionTypes.HIDE_LOADER: {
-      return {
-        ...state,
-        showLoader: false,
-      };
-    }
-    case actionTypes.SHOW_TOAST: {
-      return {
-        ...state,
-        showToast: true,
-      };
-    }
     case actionTypes.HIDE_TOAST: {
       return {
         ...state,
         showToast: false,
-      };
-    }
-    case actionTypes.SET_TOAST: {
-      return {
-        ...state,
-        toastParam: action.toastParam,
       };
     }
     case actionTypes.SET_FILTER: {
@@ -195,7 +171,10 @@ const itemsViewReducer = (state = initialState, action) => {
       return {
         ...state,
         showToast: true,
-        toastParam: { toastType: toastTypes.NEGATIVE, message: null },
+        toastParam: {
+          toastType: toastTypes.NEGATIVE,
+          message: message.INPUT_NOT_VALID,
+        },
       };
     }
 

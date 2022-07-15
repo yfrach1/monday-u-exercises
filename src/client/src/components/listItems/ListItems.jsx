@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styles from "./ListItems.module.css";
 import PropTypes from "prop-types";
 import ItemConnector from "../item/Item-connector";
+
 const ListItem = ({ items, fetchDataAction }) => {
   const checkIfTextAlreadyExist = (taskText) => {
     const taskList = items.map((item) => item.itemName);
@@ -11,7 +12,7 @@ const ListItem = ({ items, fetchDataAction }) => {
 
   useEffect(() => {
     fetchDataAction();
-  }, []);
+  }, [fetchDataAction]);
   return (
     <ul className={styles.list} id="list_items">
       {items.length ? (

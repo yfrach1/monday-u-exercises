@@ -3,9 +3,9 @@ import styles from "./Item.module.css";
 import deleteIcon from "../../assets/images/delete_icon.svg";
 import editIcon from "../../assets/images/edit_icon.svg";
 import saveIcon from "../../assets/images/save_icon.svg";
-
 import PropTypes from "prop-types";
 import Icon from "../Icon/Icon";
+import { capitalizeFirstLetter } from "../../utils/utils";
 
 const Item = ({
   id,
@@ -32,9 +32,11 @@ const Item = ({
     setShowSaveButton(false);
     setShowEditButton(true);
     setTextReadOnly(true);
-
-    if (itemName !== textAfterEdit || !checkIfTextAlreadyExist(textAfterEdit)) {
+    console.log(!checkIfTextAlreadyExist(capitalizeFirstLetter(textAfterEdit)));
+    if (!checkIfTextAlreadyExist(capitalizeFirstLetter(textAfterEdit))) {
       await updateItemNameAction(id, textAfterEdit, itemName);
+    } else {
+      setTextAfterEdit(itemName);
     }
     setIsEdit(false);
   };
@@ -51,7 +53,7 @@ const Item = ({
     setTextAfterEdit(e.target.value);
   };
   return (
-    <div
+    <li
       className={`${styles.listItem} ${status ? styles.inputTextTaskDone : ""}`}
     >
       <input
@@ -86,11 +88,12 @@ const Item = ({
       )}
       <Icon
         iconClassName={"listItemIcon"}
+        id={"delete_icon"}
         style={status ? { marginLeft: "auto" } : {}}
         src={deleteIcon}
         onClickIconHandler={onClickDeleteItemHandler}
       />
-    </div>
+    </li>
   );
 };
 
@@ -101,6 +104,7 @@ Item.propTypes = {
   deleteItemByIdAction: PropTypes.func,
   toggleStatusAction: PropTypes.func,
   updateItemNameAction: PropTypes.func,
+  checkIfTextAlreadyExist: PropTypes.func,
 };
 
 Item.defaultProps = {
@@ -110,6 +114,7 @@ Item.defaultProps = {
   deleteItemByIdAction: () => {},
   toggleStatusAction: () => {},
   updateItemNameAction: () => {},
+  checkIfTextAlreadyExist: () => {},
 };
 
 export default Item;
