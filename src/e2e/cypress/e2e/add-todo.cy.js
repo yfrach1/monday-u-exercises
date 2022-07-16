@@ -1,6 +1,6 @@
 describe("Add Todo Action", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3001");
+    cy.visit("http://localhost:3000");
   });
 
   it("Should add a new todo", () => {
