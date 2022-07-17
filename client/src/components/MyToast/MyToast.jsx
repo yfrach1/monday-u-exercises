@@ -19,13 +19,13 @@ const MyToast = ({ showToast, property, hideToastAction }) => {
 MyToast.propTypes = {
   showToast: PropTypes.bool,
   property: PropTypes.object,
-  setShowToast: PropTypes.func,
+  hideToastAction: PropTypes.func,
 };
 
 MyToast.defaultProps = {
   showToast: false,
   property: { toastType: "", message: "" },
-  setShowToast: () => {},
+  hideToastAction: () => {},
 };
 
 export default MyToast;

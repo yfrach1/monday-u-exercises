@@ -1,27 +1,22 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React from "react";
 import styles from "./TodoApp.module.css";
-import MyToast from "../myToast/MyToast";
+import MyToast from "../MyToast/MyToast";
 import PropTypes from "prop-types";
-import OpacityLoading from "../loader/Loader";
-import ListItemsConnector from "../listItems/ListItems-connector";
+import OpacityLoading from "../Loader/Loader";
+import ListItemsConnector from "../ListItems/ListItems-connector";
 import UserInputConnector from "../UserInput/UserInput-connector";
 import ClearAllButtonConnector from "../Buttons/ClearAllButton-connector";
-import DisplayOptionConnector from "../displayOption/DisplayOption-connector";
+import DisplayOptionConnector from "../DisplayOption/DisplayOption-connector";
 
 const TodoApp = ({
   showLoader,
   showToast,
   toastParam,
   viewItemsAmount,
-  allItesAmount,
-  fetchDataAction,
+  allItemsAmount,
   hideToastAction,
   filter,
 }) => {
-  useEffect(() => {
-    fetchDataAction();
-  }, []);
-
   return (
     <div className={styles.contentPlacement}>
       <div className={styles.appContainer}>
@@ -36,7 +31,7 @@ const TodoApp = ({
         <DisplayOptionConnector />
 
         <ListItemsConnector />
-        {allItesAmount ? (
+        {allItemsAmount ? (
           <div className={styles.buttomBarContainer}>
             <span>
               {`The amount of ${filter} tasks is: ${viewItemsAmount}`}
@@ -54,7 +49,7 @@ TodoApp.propTypes = {
   showToast: PropTypes.bool,
   toastParam: PropTypes.object,
   viewItemsAmount: PropTypes.number,
-  allItesAmount: PropTypes.number,
+  allItemsAmount: PropTypes.number,
   fetchDataAction: PropTypes.func,
   hideToastAction: PropTypes.func,
   filter: PropTypes.string,
@@ -65,7 +60,7 @@ TodoApp.defaultProps = {
   showToast: false,
   toastParam: { toastType: "", message: "" },
   viewItemsAmount: 0,
-  allItesAmount: 0,
+  allItemsAmount: 0,
   fetchDataAction: () => {},
   hideToastAction: () => {},
   filter: "all",

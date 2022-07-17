@@ -1,56 +1,96 @@
-import actionsTypes from "./constants";
-
-export const showLoader = () => ({
-  type: actionsTypes.SHOW_LOADER,
-});
-
-export const hideLoader = () => ({
-  type: actionsTypes.HIDE_LOADER,
-});
-
-export const showToast = () => ({
-  type: actionsTypes.SHOW_TOAST,
-});
+import actionTypes from "./constants";
+import sortType from "../actions/constants/SortType";
 
 export const hideToast = () => ({
-  type: actionsTypes.HIDE_TOAST,
+  type: actionTypes.HIDE_TOAST,
 });
 
 const setFilter = (filter) => ({
-  type: actionsTypes.SET_FILTER,
+  type: actionTypes.SET_FILTER,
   filter,
 });
 
 export const setSort = (sortType) => ({
-  type: actionsTypes.SET_SORT,
+  type: actionTypes.SET_SORT,
   sortType,
 });
 
 const setSearchKey = (searchKey) => ({
-  type: actionsTypes.SEARCH_KEY,
+  type: actionTypes.SEARCH_KEY,
   searchKey,
+});
+
+export const setInput = (value) => ({
+  type: actionTypes.SET_INPUT,
+  value,
+});
+
+export const inputNotValid = () => ({
+  type: actionTypes.INPUT_NOT_VALID,
+});
+export const fetchDataRequest = () => ({
+  type: actionTypes.FETCH_DATA_REQUEST,
+});
+
+export const fetchRequestSuccessed = () => ({
+  type: actionTypes.FETCH_REQUEST_SUCCESSED,
+});
+
+export const fetchRequestFailed = () => ({
+  type: actionTypes.FETCH_REQUEST_FAILED,
+});
+
+export const newInputRequest = () => ({
+  type: actionTypes.NEW_INPUT_REQUEST,
+});
+
+export const inputRequestSuccessed = () => ({
+  type: actionTypes.NEW_INPUT_REQUEST_SUCCESSED,
+});
+export const itemRequestAlreadyHave = () => ({
+  type: actionTypes.ITEM_REQUEST_ALREADY_HAVE,
+});
+export const inputRequestFailed = () => ({
+  type: actionTypes.NEW_INPUT_REQUEST_FAILED,
+});
+export const toggleStatusRequestSuccessed = (newStatus) => ({
+  type: actionTypes.TOGGLE_STATUS_REQUEST_SUCCESSED,
+  newStatus,
+});
+export const toggleStatusRequestFailed = () => ({
+  type: actionTypes.TOGGLE_STATUS_REQUEST_FAILED,
+});
+
+export const updateItemTextRequestSuccessed = () => ({
+  type: actionTypes.UPDTAE_ITEM_TEXT_REQUEST_SUCCESSED,
+});
+export const updateItemTextRequestAlreadyHave = () => ({
+  type: actionTypes.UPDTAE_ITEM_TEXT_REQUEST_ALREADY_HAVE,
+});
+export const updateItemTextRequestFailed = () => ({
+  type: actionTypes.UPDTAE_ITEM_TEXT_REQUEST_FAILED,
+});
+export const removeIdRequestSuccessed = () => ({
+  type: actionTypes.REMOVE_ITEM_REQUEST_SUCCEESSED,
+});
+export const removeIdRequestFailed = () => ({
+  type: actionTypes.REMOVE_ITEM_REQUEST_FAILED,
+});
+export const clearAllRequestSuccessed = () => ({
+  type: actionTypes.CLEAR_ALL_ITEM_REQUEST_SUCCESS,
+});
+export const clearAllRequestFailed = () => ({
+  type: actionTypes.CLEAR_ALL_ITEM_REQUEST_FAILED,
 });
 
 export const setToast = (toastType, message) => {
   return {
-    type: actionsTypes.SET_TOAST,
+    type: actionTypes.SET_TOAST,
     toastParam: {
       toastType,
       message,
     },
   };
-};
-
-export const showLoaderAction = () => {
-  return (dispatch) => dispatch(showLoader());
-};
-
-export const hideLoaderAction = () => {
-  return (dispatch) => dispatch(hideLoader());
-};
-
-export const showToastAction = () => {
-  return (dispatch) => dispatch(showToast());
 };
 
 export const hideToastAction = () => {
@@ -63,21 +103,26 @@ export const setFilterAction = (filter) => {
 
 export const setSortAction = (isChecked) => {
   return (dispatch) => {
-    const sortType = isChecked ? "DESC" : "none";
-    dispatch(setSort(sortType));
+    const newSortType = isChecked ? sortType.DESC : null;
+    dispatch(setSort(newSortType));
   };
 };
 
-export const toggleSortTypeAction = (sortType) => {
+export const toggleSortTypeAction = (currentSortType) => {
   return (dispatch) => {
-    const newSortType = sortType === "ASC" ? "DESC" : "ASC";
+    const newSortType =
+      currentSortType === sortType.ASC ? sortType.DESC : sortType.ASC;
     dispatch(setSort(newSortType));
   };
 };
 
 export const setSearchKeyAction = (input) => {
-  const searchKey = input === "" ? "none" : input;
+  const searchKey = input === "" ? null : input;
   return (dispatch) => {
     dispatch(setSearchKey(searchKey));
   };
+};
+
+export const setInputAction = (value) => {
+  return (dispatch) => dispatch(setInput(value));
 };

@@ -1,17 +1,18 @@
 import { useMemo } from "react";
-import SortConnector from "../sort/Sort-connector";
+import SortConnector from "../Sort/Sort-connector";
 import { Dropdown, Search } from "monday-ui-react-core";
+import filterTypes from "../../app/constant/Filter";
 import styles from "./DisplayOption.module.css";
 
 const DisplayOption = ({ setFilterAction, setSearchKeyAction }) => {
   const options = useMemo(
     () => [
       {
-        value: "done",
+        value: filterTypes.DONE,
         label: "Done",
       },
       {
-        value: "pending",
+        value: filterTypes.PENDING,
         label: "Pending",
       },
     ],
@@ -28,7 +29,7 @@ const DisplayOption = ({ setFilterAction, setSearchKeyAction }) => {
             options={options}
             className="dropdown-stories-styles_spacing"
             onChange={(e) => (e !== null ? setFilterAction(e.value) : null)}
-            onClear={() => setFilterAction("all")}
+            onClear={() => setFilterAction(null)}
           />
         </div>
 

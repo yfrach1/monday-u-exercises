@@ -9,7 +9,7 @@ const Sort = ({ setSortAction, toggleSortTypeAction, sortType }) => {
       <input
         className={styles.sortCheckBox}
         type="checkbox"
-        checked={sortType === "none" ? false : true}
+        checked={sortType === null ? false : true}
         value
         onChange={(event) => {
           const isChecked = event.target.checked;
@@ -22,7 +22,7 @@ const Sort = ({ setSortAction, toggleSortTypeAction, sortType }) => {
       >
         sort
       </div>
-      {sortType !== "none" ? (
+      {sortType !== null ? (
         <img
           className={styles.sortIcon}
           src={sortType === "DESC" ? downArrow : upArrow}
@@ -45,7 +45,7 @@ Sort.propTypes = {
 Sort.defaultProps = {
   setSortAction: () => {},
   toggleSortTypeAction: () => {},
-  sortType: "none",
+  sortType: null,
 };
 
 export default Sort;
