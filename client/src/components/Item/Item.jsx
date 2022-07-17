@@ -32,7 +32,6 @@ const Item = ({
     setShowSaveButton(false);
     setShowEditButton(true);
     setTextReadOnly(true);
-    console.log(!checkIfTextAlreadyExist(capitalizeFirstLetter(textAfterEdit)));
     if (!checkIfTextAlreadyExist(capitalizeFirstLetter(textAfterEdit))) {
       await updateItemNameAction(id, textAfterEdit, itemName);
     } else {

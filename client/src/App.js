@@ -1,5 +1,4 @@
 import styles from "./App.module.css";
-import Main from "./components/Main/Main";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import TodoSwitch from "./navigation/TodoSwitch";
 import React from "react";
