@@ -1,13 +1,10 @@
 import styles from "./App.module.css";
-import NavigationBar from "./components/NavigationBar/NavigationBar";
-import TodoSwitch from "./navigation/TodoSwitch";
+import Main from "./components/main/Main";
 import React from "react";
 function App() {
   return (
-    <div className={styles.appBackground}>
-      <NavigationBar />
-      <TodoSwitch />
-      {/* <Main /> */}
+    <div className={styles.app}>
+      <Main />
     </div>
   );
 }
