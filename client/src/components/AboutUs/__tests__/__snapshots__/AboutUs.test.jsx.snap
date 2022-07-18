@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AboutUs Snapshot  renders AboutUs component 1`] = `
+<div
+  className="contentPlacement"
+>
+  <img
+    src="Harel.JPG"
+    style={
+      Object {
+        "padding": "0 10px",
+        "width": "300px",
+      }
+    }
+  />
+  <div>
+    <div
+      style={
+        Object {
+          "fontSize": "40px",
+        }
+      }
+    >
+      Hey, my name is Harel, and I'm proud to present to you my Todo app.
+    </div>
+    <div
+      style={
+        Object {
+          "fontSize": "20px",
+        }
+      }
+    >
+      <br />
+      <br />
+      <div>
+         No more excuses and delaying things;
+      </div>
+      <div>
+        with this app, you will be tracking the tasks you have, both pending and done.
+      </div>
+      <div>
+        so let's go and try to add one; let's say.. wash the dishes 😆😆
+      </div>
+    </div>
+  </div>
+</div>
+`;
