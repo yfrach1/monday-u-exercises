@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.002cb188.css",
-    "main.js": "/static/js/main.e026ed60.js",
+    "main.css": "/static/css/main.cf010159.css",
+    "main.js": "/static/js/main.7b5dffd6.js",
     "static/js/787.2843ca88.chunk.js": "/static/js/787.2843ca88.chunk.js",
     "static/media/Harel.JPG": "/static/media/Harel.6691d2c35d4b1afe0eb7.JPG",
     "static/media/spinner 2.svg": "/static/media/spinner 2.3c541d2bac9e9232c0147f1fbb34d583.svg",
@@ -11,12 +11,12 @@
     "index.html": "/index.html",
     "static/media/up_arrow.svg": "/static/media/up_arrow.e59b84208df5cb9dee542d29f9e56b19.svg",
     "static/media/down_arrow.svg": "/static/media/down_arrow.4e67b88abf70a8aa668b72a65f53ce81.svg",
-    "main.002cb188.css.map": "/static/css/main.002cb188.css.map",
-    "main.e026ed60.js.map": "/static/js/main.e026ed60.js.map",
+    "main.cf010159.css.map": "/static/css/main.cf010159.css.map",
+    "main.7b5dffd6.js.map": "/static/js/main.7b5dffd6.js.map",
     "787.2843ca88.chunk.js.map": "/static/js/787.2843ca88.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.002cb188.css",
-    "static/js/main.e026ed60.js"
+    "static/css/main.cf010159.css",
+    "static/js/main.7b5dffd6.js"
   ]
 }

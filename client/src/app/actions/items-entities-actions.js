@@ -18,6 +18,7 @@ import {
   clearAllRequestSuccessed,
   clearAllRequestFailed,
   hideToast,
+  setSort,
 } from "./items-view-actions";
 import {
   getAllTasks,
@@ -100,6 +101,7 @@ export const deleteAllItemsAction = () => {
       await clearAllItems();
       dispatch(removeAllItems());
       dispatch(clearAllRequestSuccessed());
+      dispatch(setSort(null));
     } catch (err) {
       dispatch(clearAllRequestFailed());
     }
