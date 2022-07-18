@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./ListItems.module.css";
 import PropTypes from "prop-types";
-import ItemConnector from "../item/Item-connector";
+import ItemConnector from "../Item/Item-connector";
 const ListItem = ({ items }) => {
   const checkIfTextAlreadyExist = (taskText) => {
     const taskList = items.map((item) => item.itemName);

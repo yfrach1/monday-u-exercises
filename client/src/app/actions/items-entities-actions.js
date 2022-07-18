@@ -73,6 +73,7 @@ export const fetchDataAction = () => {
       //   dispatch(hideToast());
       // }, 5000);
       // successToastTimer();
+      // this throw an error, why?
       // Im sure there is a better way to do this
     } catch (err) {
       dispatch(fetchRequestFailed());
