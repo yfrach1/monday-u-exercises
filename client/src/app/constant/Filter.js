@@ -1,7 +1,7 @@
 const FILTER = {
   ALL: "all",
-  DONE: "DONE",
-  PENDING: "PENDING",
+  DONE: "done",
+  PENDING: "pending",
 };
 
 export default FILTER;

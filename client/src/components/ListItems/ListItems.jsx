@@ -14,7 +14,9 @@ const ListItem = ({ items }) => {
         return (
           <ItemConnector
             key={item.id}
-            item={item}
+            itemName={item.itemName}
+            id={item.id}
+            status={item.status}
             checkIfTextAlreadyExist={checkIfTextAlreadyExist}
           />
         );

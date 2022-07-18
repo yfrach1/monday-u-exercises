@@ -1,8 +1,8 @@
 import { Switch, Route, Redirect } from "react-router-dom";
 import ClientRoute from "./Route";
 import TodoAppConnector from "../components/todoApp/TodoApp-connector";
-import Statistics from "../components/statistics/Statistics";
-import AboutUs from "../components/aboutUs/AboutUs";
+import Statistics from "../components/Statistics/Statistics";
+import AboutUs from "../components/AboutUs/AboutUs";
 const TodoSwitch = () => {
   return (
     <Switch>

@@ -17,6 +17,7 @@ import {
   removeIdRequestFailed,
   clearAllRequestSuccessed,
   clearAllRequestFailed,
+  hideToast,
 } from "./items-view-actions";
 import {
   getAllTasks,
@@ -68,7 +69,11 @@ export const fetchDataAction = () => {
       const data = await getAllTasks();
       dispatch(setData(data));
       dispatch(fetchRequestSuccessed());
-      //add auto disapper after 5 sec
+      // const successToastTimer = setTimeout(() => {
+      //   dispatch(hideToast());
+      // }, 5000);
+      // successToastTimer();
+      // Im sure there is a better way to do this
     } catch (err) {
       dispatch(fetchRequestFailed());
     }
