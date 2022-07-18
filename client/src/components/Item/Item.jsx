@@ -40,11 +40,11 @@ const Item = ({
 
   const onClickDeleteItemHandler = useCallback(async () => {
     await deleteItemByIdAction(id);
-  }, [id]);
+  }, [id, deleteItemByIdAction]);
 
   const onClickstatusCheckBoxHandler = useCallback(async () => {
     await toggleStatusAction(id);
-  }, [id]);
+  }, [id, toggleStatusAction]);
 
   const onChangeTaskTextHandler = (e) => {
     setTextAfterEdit(e.target.value);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect } from "react";
 import styles from "./TodoApp.module.css";
 import MyToast from "../myToast/MyToast";
 import PropTypes from "prop-types";
@@ -20,7 +20,7 @@ const TodoApp = ({
 }) => {
   useEffect(() => {
     fetchDataAction();
-  }, []);
+  }, [fetchDataAction]);
 
   return (
     <div className={styles.contentPlacement}>

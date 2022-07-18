@@ -3,7 +3,11 @@ import styles from "./AboutUs.module.css";
 const AboutUs = () => {
   return (
     <div className={styles.contentPlacement}>
-      <img style={{ width: "300px", padding: "0 10px" }} src={harelImg} />
+      <img
+        style={{ width: "300px", padding: "0 10px" }}
+        src={harelImg}
+        alt={""}
+      />
       <div>
         <div style={{ fontSize: "40px" }}>
           Hey, my name is Harel, and I'm proud to present to you my Todo app.

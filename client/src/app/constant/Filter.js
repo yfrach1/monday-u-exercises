@@ -1,4 +1,5 @@
 const FILTER = {
+  ALL: "all",
   DONE: "DONE",
   PENDING: "PENDING",
 };

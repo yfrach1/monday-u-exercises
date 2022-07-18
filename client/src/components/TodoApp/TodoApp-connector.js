@@ -9,7 +9,7 @@ import {
 import {
   getViewItemsAmount,
   getAllItemsAmount,
-} from "../../app/selectors/items-entities-selectors";
+} from "../../app/selectors/items-view-selectors";
 import {
   fetchDataAction,
   newInputAction,

@@ -5,7 +5,7 @@ const initialState = {
   showLoader: false,
   showToast: false,
   toastParam: { toastType: null, message: null },
-  itemsFilter: null,
+  itemsFilter: "all",
   sortType: null,
   searchKey: null,
   inputValue: "",
