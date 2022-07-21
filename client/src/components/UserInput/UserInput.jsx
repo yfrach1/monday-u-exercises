@@ -17,6 +17,7 @@ const UserInput = ({ newInputAction, setInputAction, inputValue }) => {
     <div className={styles.listControls}>
       <input
         className={styles.listItemInput}
+        id="input"
         type="text"
         id="user_input"
         placeholder="Add your new todo"
