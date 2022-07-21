@@ -1,0 +1,146 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Item Snapshot  renders Item component with no variable sending via props from parent component 1`] = `
+<li
+  className="listItem "
+>
+  <input
+    checked={false}
+    className="itemStatus"
+    onChange={[Function]}
+    type="checkbox"
+  />
+  <input
+    className="itemText"
+    onChange={[Function]}
+    readOnly={true}
+    type="text"
+    value="itemName"
+  />
+  <img
+    alt=""
+    className="listItemIcon"
+    onClick={[Function]}
+    src="edit_icon.svg"
+    style={
+      Object {
+        "marginLeft": "auto",
+      }
+    }
+  />
+  <img
+    alt=""
+    className="listItemIcon"
+    onClick={[Function]}
+    src="delete_icon.svg"
+    style={Object {}}
+  />
+</li>
+`;
+
+exports[`Item Snapshot  renders Item component with no variable sending via props from parent component 2`] = `
+<li
+  className="listItem "
+>
+  <input
+    checked={false}
+    className="itemStatus"
+    onChange={[Function]}
+    type="checkbox"
+  />
+  <input
+    className="itemText"
+    onChange={[Function]}
+    readOnly={true}
+    type="text"
+    value="itemName example"
+  />
+  <img
+    alt=""
+    className="listItemIcon"
+    onClick={[Function]}
+    src="edit_icon.svg"
+    style={
+      Object {
+        "marginLeft": "auto",
+      }
+    }
+  />
+  <img
+    alt=""
+    className="listItemIcon"
+    onClick={[Function]}
+    src="delete_icon.svg"
+    style={Object {}}
+  />
+</li>
+`;
+
+exports[`Item Snapshot  renders Item component without checkIfTextAlreadyExist function  1`] = `
+<li
+  className="listItem "
+>
+  <input
+    checked={false}
+    className="itemStatus"
+    onChange={[Function]}
+    type="checkbox"
+  />
+  <input
+    className="itemText"
+    onChange={[Function]}
+    readOnly={true}
+    type="text"
+    value="itemName example"
+  />
+  <img
+    alt=""
+    className="listItemIcon"
+    onClick={[Function]}
+    src="edit_icon.svg"
+    style={
+      Object {
+        "marginLeft": "auto",
+      }
+    }
+  />
+  <img
+    alt=""
+    className="listItemIcon"
+    onClick={[Function]}
+    src="delete_icon.svg"
+    style={Object {}}
+  />
+</li>
+`;
+
+exports[`Item Snapshot  renders Item component without itemName  1`] = `
+<li
+  className="listItem inputTextTaskDone"
+>
+  <input
+    checked={true}
+    className="itemStatus"
+    onChange={[Function]}
+    type="checkbox"
+  />
+  <input
+    className="itemText"
+    onChange={[Function]}
+    readOnly={true}
+    type="text"
+    value="itemName"
+  />
+  <img
+    alt=""
+    className="listItemIcon"
+    onClick={[Function]}
+    src="delete_icon.svg"
+    style={
+      Object {
+        "marginLeft": "auto",
+      }
+    }
+  />
+</li>
+`;

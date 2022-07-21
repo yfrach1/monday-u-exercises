@@ -179,15 +179,13 @@ checkIfTaskExistInDB = async (text) => {
 updateItemTextHandler = async (id, text) => {
   const item = await Items.findOne({ where: { id } });
   let result = {
-    updateResult: "success",
     newValue: capitalizeFirstLetter(text),
     id,
     field: "itemName",
   };
   if (await checkIfTaskExistInDB(text)) {
     result = {
-      updateResult: "already have",
-      newValue: item.itemName,
+      newValue: false,
     };
   } else {
     await item.update({

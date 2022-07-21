@@ -1,96 +1,183 @@
 import actionTypes from "../actions/constants";
-
+import toastTypes from "../actions/constants/Toast";
+import message from "../actions/constants/Message";
 const initialState = {
   showLoader: false,
   showToast: false,
   toastParam: { toastType: null, message: null },
   itemsFilter: "all",
-  sortType: "none",
-  searchKey: "none",
+  sortType: null,
+  searchKey: null,
+  inputValue: "",
 };
 
 const itemsViewReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.SHOW_LOADER: {
+    case actionTypes.FETCH_DATA_REQUEST: {
       return {
+        ...state,
         showLoader: true,
-        showToast: state.showToast,
-        toastParam: state.toastParam,
-        itemsFilter: state.itemsFilter,
-        sortType: state.sortType,
-        searchKey: state.searchKey,
       };
     }
-    case actionTypes.HIDE_LOADER: {
+    case actionTypes.FETCH_REQUEST_SUCCESSED: {
       return {
+        ...state,
         showLoader: false,
-        showToast: state.showToast,
-        toastParam: state.toastParam,
-        itemsFilter: state.itemsFilter,
-        sortType: state.sortType,
-        searchKey: state.searchKey,
-      };
-    }
-    case actionTypes.SHOW_TOAST: {
-      return {
-        showLoader: state.showLoader,
         showToast: true,
-        toastParam: state.toastParam,
-        itemsFilter: state.itemsFilter,
-        sortType: state.sortType,
-        searchKey: state.searchKey,
+        toastParam: {
+          toastType: toastTypes.POSITIVE,
+          message: message.FETCH_REQUEST_SUCCESSED,
+        },
       };
     }
+    case actionTypes.FETCH_REQUEST_FAILED: {
+      return {
+        ...state,
+        showLoader: false,
+        showToast: true,
+        toastParam: {
+          toastType: toastTypes.NEGATIVE,
+          message: message.FETCH_REQUEST_FAILED,
+        },
+      };
+    }
+
+    case actionTypes.NEW_INPUT_REQUEST: {
+      return {
+        ...state,
+        showLoader: true,
+      };
+    }
+    case actionTypes.NEW_INPUT_REQUEST_SUCCESSED: {
+      return {
+        ...state,
+        showLoader: false,
+        showToast: true,
+        toastParam: {
+          toastType: toastTypes.POSITIVE,
+          message: message.ADD_ITEM_SUCCESSED,
+        },
+      };
+    }
+    case actionTypes.ITEM_REQUEST_ALREADY_HAVE: {
+      return {
+        ...state,
+        showLoader: false,
+        showToast: true,
+        toastParam: {
+          toastType: toastTypes.NORMAL,
+          message: message.ITEM_ALREADY_HAVE,
+        },
+      };
+    }
+
+    case actionTypes.NEW_INPUT_REQUEST_FAILED: {
+      return {
+        ...state,
+        showLoader: false,
+        showToast: true,
+        toastParam: {
+          toastType: toastTypes.NEGATIVE,
+          message: message.ADD_ITEM_FAILED,
+        },
+      };
+    }
+    case actionTypes.TOGGLE_STATUS_REQUEST_SUCCESSED: {
+      return {
+        ...state,
+        showToast: true,
+        toastParam: {
+          toastType: toastTypes.POSITIVE,
+          message: action.newStatus
+            ? message.TOGGLE_STATUS_CHECKED_SUCCESSED
+            : message.TOGGLE_STATUS_UNCHECKED_SUCCESSED,
+        },
+      };
+    }
+
+    case actionTypes.REMOVE_ITEM_REQUEST_SUCCEESSED: {
+      return {
+        ...state,
+        showToast: true,
+        toastParam: {
+          toastType: toastTypes.POSITIVE,
+          message: message.DELETE_ITEM_SUCCESSED,
+        },
+      };
+    }
+
+    case actionTypes.REMOVE_ITEM_REQUEST_FAILED: {
+      return {
+        ...state,
+        showToast: true,
+        toastParam: {
+          toastType: toastTypes.NEGATIVE,
+          message: message.DELETE_ITEM_FAILED,
+        },
+      };
+    }
+    case actionTypes.CLEAR_ALL_ITEM_REQUEST_SUCCESS: {
+      return {
+        ...state,
+        showToast: true,
+        toastParam: {
+          toastType: toastTypes.POSITIVE,
+          message: message.CLEAR_ALL_ITEMS_SUCCESSED,
+        },
+      };
+    }
+    case actionTypes.CLEAR_ALL_ITEM_REQUEST_FAILED: {
+      return {
+        ...state,
+        showToast: true,
+        toastParam: {
+          toastType: toastTypes.NEGATIVE,
+          message: message.CLEAR_ALL_ITEMS_FAILED,
+        },
+      };
+    }
+
     case actionTypes.HIDE_TOAST: {
       return {
-        showLoader: state.showLoader,
+        ...state,
         showToast: false,
-        toastParam: state.toastParam,
-        itemsFilter: state.itemsFilter,
-        sortType: state.sortType,
-        searchKey: state.searchKey,
-      };
-    }
-    case actionTypes.SET_TOAST: {
-      return {
-        showLoader: state.showLoader,
-        showToast: state.showToast,
-        toastParam: action.toastParam,
-        itemsFilter: state.itemsFilter,
-        sortType: state.sortType,
-        searchKey: state.searchKey,
       };
     }
     case actionTypes.SET_FILTER: {
       return {
-        showLoader: state.showLoader,
-        showToast: state.showToast,
-        toastParam: state.toastParam,
+        ...state,
         itemsFilter: action.filter,
-        sortType: state.sortType,
-        searchKey: state.searchKey,
       };
     }
     case actionTypes.SET_SORT: {
       return {
-        showLoader: state.showLoader,
-        showToast: state.showToast,
-        toastParam: state.toastParam,
-        itemsFilter: state.itemsFilter,
+        ...state,
         sortType: action.sortType,
-        searchKey: state.searchKey,
       };
     }
     case actionTypes.SEARCH_KEY: {
       return {
-        showLoader: state.showLoader,
-        showToast: state.showToast,
-        toastParam: state.toastParam,
-        itemsFilter: state.itemsFilter,
-        sortType: state.sortType,
+        ...state,
         searchKey: action.searchKey,
       };
     }
+    case actionTypes.SET_INPUT: {
+      return {
+        ...state,
+        inputValue: action.value,
+      };
+    }
+    case actionTypes.INPUT_NOT_VALID: {
+      return {
+        ...state,
+        showToast: true,
+        toastParam: {
+          toastType: toastTypes.NEGATIVE,
+          message: message.INPUT_NOT_VALID,
+        },
+      };
+    }
+
     default:
       return state;
   }

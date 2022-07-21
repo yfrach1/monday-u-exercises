@@ -8,6 +8,9 @@ import {
   getViewItemsAmount,
   getAllItemsAmount,
 } from "../../app/selectors/items-view-selectors";
+import {
+  newInputAction,
+} from "../../app/actions/items-entities-actions";
 
 import { hideToastAction } from "../../app/actions/items-view-actions";
 import TodoApp from "./TodoApp";

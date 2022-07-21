@@ -1,10 +1,23 @@
 import actionsTypes from "./constants";
 import {
-  showLoader,
-  hideLoader,
-  showToast,
+  inputNotValid,
+  fetchDataRequest, //same 1
+  fetchRequestSuccessed,
+  fetchRequestFailed,
+  setInput,
+  newInputRequest, //same 1
+  inputRequestSuccessed,
+  inputRequestFailed,
+  itemRequestAlreadyHave,
+  toggleStatusRequestSuccessed,
+  toggleStatusRequestFailed,
+  updateItemTextRequestSuccessed,
+  updateItemTextRequestFailed,
+  removeIdRequestSuccessed,
+  removeIdRequestFailed,
+  clearAllRequestSuccessed,
+  clearAllRequestFailed,
   hideToast,
-  setToast,
   setSort,
 } from "./items-view-actions";
 import {
@@ -12,7 +25,7 @@ import {
   deleteTaskById,
   handleNewItem,
   toggleStatus,
-  deleteAllItems,
+  clearAllItems,
   updateTaskText,
 } from "../services/itemClient";
 import { checkIfInputIsNotValid } from "../../utils/utils";
@@ -32,7 +45,7 @@ const removeItem = (id) => {
 };
 const removeAllItems = () => {
   return {
-    type: actionsTypes.REMOVE_ITEMS,
+    type: actionsTypes.CLEAR_ITEMS,
   };
 };
 
@@ -50,88 +63,98 @@ const updateItem = (itemData) => {
   };
 };
 
-const setLoaderOff = async (dispatch, action, time) => {
-  setTimeout(() => {
-    dispatch(action());
-  }, time);
-};
-
-const handelActionResult = (response, dispatch, action) => {
-  const { result, message, data } = response;
-  switch (result) {
-    case "success": {
-      dispatch(action(data));
-      dispatch(setToast("POSITIVE", message));
-      dispatch(showToast());
-      dispatch(setSort("none"));
-      setLoaderOff(dispatch, hideToast, 5000);
-
-      break;
-    }
-    case "failed": {
-      dispatch(setToast("NEGATIVE", message));
-      dispatch(showToast());
-      break;
-    }
-    case "already have": {
-      dispatch(setToast("", message));
-      dispatch(showToast());
-      break;
-    }
-  }
-};
-
 export const fetchDataAction = () => {
   return async (dispatch) => {
-    dispatch(showLoader());
-    const fetchDataResult = await getAllTasks();
-    dispatch(hideLoader());
-    return handelActionResult(fetchDataResult, dispatch, setData);
+    dispatch(fetchDataRequest());
+    try {
+      const data = await getAllTasks();
+      dispatch(setData(data));
+      dispatch(fetchRequestSuccessed());
+      // const successToastTimer = setTimeout(() => {
+      //   dispatch(hideToast());
+      // }, 5000);
+      // successToastTimer();
+      // this throw an error, why?
+      // Im sure there is a better way to do this
+    } catch (err) {
+      dispatch(fetchRequestFailed());
+    }
   };
 };
 
 export const deleteItemByIdAction = (id) => {
   return async (dispatch) => {
-    const deleteItemByIdResult = await deleteTaskById(id);
-    return handelActionResult(deleteItemByIdResult, dispatch, removeItem);
+    try {
+      const data = await deleteTaskById(id);
+
+      dispatch(removeItem(data));
+      dispatch(removeIdRequestSuccessed());
+    } catch (err) {
+      dispatch(removeIdRequestFailed());
+    }
   };
 };
 
-export const deleteAllItemsAction = (id) => {
+export const deleteAllItemsAction = () => {
   return async (dispatch) => {
-    const deleteAllItemsResult = await deleteAllItems(id);
-    return handelActionResult(deleteAllItemsResult, dispatch, removeAllItems);
+    try {
+      await clearAllItems();
+      dispatch(removeAllItems());
+      dispatch(clearAllRequestSuccessed());
+      dispatch(setSort(null));
+    } catch (err) {
+      dispatch(clearAllRequestFailed());
+    }
   };
 };
 
 export const newInputAction = (input) => {
   return async (dispatch) => {
     if (checkIfInputIsNotValid(input)) {
-      dispatch(setToast("NEGATIVE", "Input is not valid"));
-      dispatch(showToast());
-    } else {
-      dispatch(showLoader());
-      const addNewInputResult = await handleNewItem(input);
-      dispatch(hideLoader());
-      return handelActionResult(addNewInputResult, dispatch, addItems);
+      return dispatch(inputNotValid());
+    }
+    dispatch(newInputRequest());
+    try {
+      const data = await handleNewItem(input);
+      if (data.length) {
+        // check it which way is better
+        dispatch(addItems(data));
+        dispatch(inputRequestSuccessed());
+      } else {
+        dispatch(itemRequestAlreadyHave());
+      }
+      dispatch(setInput(""));
+    } catch (err) {
+      dispatch(inputRequestFailed());
     }
   };
 };
 
 export const toggleStatusAction = (id) => {
   return async (dispatch) => {
-    dispatch(showLoader());
-    const toggleStatusResult = await toggleStatus(id);
-    dispatch(hideLoader());
-    return handelActionResult(toggleStatusResult, dispatch, updateItem);
+    //check if loader is needed
+    try {
+      const data = await toggleStatus(id);
+      dispatch(updateItem(data));
+      dispatch(toggleStatusRequestSuccessed(data.newValue));
+    } catch (err) {
+      dispatch(toggleStatusRequestFailed());
+    }
   };
 };
 
-export const updateItemNameAction = (id, textAfterEdit, textBeforeEdit) => {
+export const updateItemNameAction = (id, textAfterEdit) => {
   return async (dispatch) => {
-    dispatch(showLoader());
-    const updateItemNameResult = await updateTaskText(id, textAfterEdit);
-    dispatch(hideLoader());
-    return handelActionResult(updateItemNameResult, dispatch, updateItem);
+    try {
+      const data = await updateTaskText(id, textAfterEdit);
+      if (data.newValue) {
+        dispatch(updateItem(data));
+        dispatch(updateItemTextRequestSuccessed());
+      } else {
+        dispatch(itemRequestAlreadyHave());
+      }
+    } catch (err) {
+      dispatch(updateItemTextRequestFailed());
+    }
   };
 };

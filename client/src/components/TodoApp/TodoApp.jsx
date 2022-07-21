@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect } from "react";
 import styles from "./TodoApp.module.css";
-import MyToast from "../myToast/MyToast";
+import MyToast from "../MyToast/MyToast";
 import PropTypes from "prop-types";
 import OpacityLoading from "../loader/Loader";
-import ListItemsConnector from "../listItems/ListItems-connector";
+import ListItemsConnector from "../ListItems/ListItems-connector";
 import UserInputConnector from "../UserInput/UserInput-connector";
 import ClearAllButtonConnector from "../Buttons/ClearAllButton-connector";
-import DisplayOptionConnector from "../displayOption/DisplayOption-connector";
+import DisplayOptionConnector from "../DisplayOption/DisplayOption-connector";
 
 const TodoApp = ({
   showLoader,
@@ -20,7 +20,7 @@ const TodoApp = ({
 }) => {
   useEffect(() => {
     fetchDataAction();
-  }, []);
+  }, [fetchDataAction]);
 
   return (
     <div className={styles.contentPlacement}>
@@ -34,7 +34,6 @@ const TodoApp = ({
         <div className={styles.appTitle}>Todo App</div>
         <UserInputConnector />
         <DisplayOptionConnector />
-
         <ListItemsConnector />
         {allItesAmount ? (
           <div className={styles.buttomBarContainer}>
