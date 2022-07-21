@@ -20,6 +20,7 @@ const UserInput = ({ newInputAction }) => {
     <div className={styles.listControls}>
       <input
         className={styles.listItemInput}
+        id="input"
         type="text"
         placeholder="Add your new todo"
         ref={userInputRef}

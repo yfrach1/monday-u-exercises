@@ -65,6 +65,7 @@ const Item = ({
       <input
         className={isEdit ? styles.itemTextEditMode : styles.itemText}
         type="text"
+        id="item_input"
         value={!isEdit ? itemName : textAfterEdit}
         readOnly={textReadOnly}
         onChange={onChangeTaskTextHandler}
