@@ -1,12 +1,3 @@
-export const initResult = (result, message, data) => {
-  const res = {
-    result,
-    message,
-    data,
-  };
-  return res;
-};
-
 export const checkIfInputIsNotValid = (input) => {
   if (!input || !input.trim().replaceAll(",", "").length) {
     return true;
@@ -15,7 +6,8 @@ export const checkIfInputIsNotValid = (input) => {
   }
 };
 
-export function capitalizeFirstLetter(text) {
+
+export const capitalizeFirstLetter = (text) => {
   const capitalized = text.charAt(0).toUpperCase() + text.slice(1);
   return capitalized;
-}
+};

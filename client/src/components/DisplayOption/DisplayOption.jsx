@@ -29,7 +29,9 @@ const DisplayOption = ({ setFilterAction, setSearchKeyAction }) => {
             options={options}
             className="dropdown-stories-styles_spacing"
             onChange={(e) => (e !== null ? setFilterAction(e.value) : null)}
+
             onClear={() => setFilterAction(filterTypes.ALL)}
+
           />
         </div>
 

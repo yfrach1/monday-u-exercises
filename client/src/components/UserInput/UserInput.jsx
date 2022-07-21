@@ -3,12 +3,9 @@ import AddButton from "../Buttons/AddButton";
 import styles from "./UserInput.module.css";
 import PropTypes from "prop-types";
 
-const UserInput = ({ newInputAction }) => {
-  const userInputRef = useRef();
+const UserInput = ({ newInputAction, setInputAction, inputValue }) => {
   const onClickAddButtun = () => {
-    const userInput = userInputRef.current.value;
-    userInputRef.current.value = "";
-    newInputAction(userInput);
+    newInputAction(inputValue);
   };
 
   const handleKeypress = (e) => {
@@ -21,8 +18,10 @@ const UserInput = ({ newInputAction }) => {
       <input
         className={styles.listItemInput}
         type="text"
+        id="user_input"
         placeholder="Add your new todo"
-        ref={userInputRef}
+        value={inputValue}
+        onChange={(e) => setInputAction(e.target.value)}
         onKeyPress={handleKeypress}
       />
 
