@@ -70,12 +70,7 @@ export const fetchDataAction = () => {
       const data = await getAllTasks();
       dispatch(setData(data));
       dispatch(fetchRequestSuccessed());
-      // const successToastTimer = setTimeout(() => {
-      //   dispatch(hideToast());
-      // }, 5000);
-      // successToastTimer();
-      // this throw an error, why?
-      // Im sure there is a better way to do this
+     
     } catch (err) {
       dispatch(fetchRequestFailed());
     }
